@@ -1,0 +1,117 @@
+stages:
+  - validate
+  - quality
+
+variables:
+  COMPOSER_HOME: "$CI_PROJECT_DIR/.composer-cache"
+
+default:
+  tags:
+    - docker
+
+.composer-cache:
+  cache:
+    key:
+      files:
+        - composer.lock
+    paths:
+      - vendor/
+      - .composer-cache/
+
+.install-deps:
+  before_script:
+    - apt-get update -qq && apt-get install -y -qq git unzip zip
+    - php -v
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-interaction --prefer-dist --no-progress --optimize-autoloader
+
+php:syntax:
+  stage: validate
+  image: php:8.4-cli
+  script:
+    - |
+      ERRORS=0
+      while IFS= read -r file; do
+        OUTPUT=$(php -l "$file" 2>&1)
+        if echo "$OUTPUT" | grep -q "Parse error\|Fatal error"; then
+          echo "$OUTPUT"
+          ERRORS=1
+        fi
+      done < <(find src public/index.php -name "*.php" 2>/dev/null)
+      exit $ERRORS
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+php:codesniffer:
+  stage: validate
+  image: php:8.4-cli
+  extends:
+    - .composer-cache
+    - .install-deps
+  script:
+    - vendor/bin/phpcs --standard=phpcs.xml --report=full --report-junit=phpcs-report.xml --colors
+  artifacts:
+    when: always
+    reports:
+      junit: phpcs-report.xml
+    expire_in: 7 days
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == "main"'
+    - if: '$CI_COMMIT_BRANCH == "master"'
+
+commit:message:
+  stage: validate
+  image: alpine:latest
+  before_script:
+    - apk add --no-cache git bash
+  script:
+    - |
+      PATTERN="^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-z0-9/_-]+\))?: .{1,100}$"
+      FAILED=0
+      # Verifica se origin/main ou origin/master existe para comparar
+      TARGET_BRANCH=${CI_MERGE_REQUEST_TARGET_BRANCH_NAME:-main}
+      while IFS= read -r msg; do
+        echo "$msg" | grep -qE "^(Merge|Revert|squash!|fixup!)" && continue
+        if ! echo "$msg" | grep -qE "$PATTERN"; then
+          echo "COMMIT INVÁLIDO: $msg"
+          FAILED=1
+        fi
+      done < <(git log "origin/${TARGET_BRANCH}..HEAD" --pretty=format:"%s")
+      exit $FAILED
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+php:insights:
+  stage: quality
+  image: php:8.4-cli
+  extends:
+    - .composer-cache
+    - .install-deps
+  script:
+    - vendor/bin/phpinsights analyse src --no-interaction --min-quality=80 --min-complexity=80 --min-architecture=80 --min-style=80
+  allow_failure: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+
+# ─── PHPStan ───────────────────────────────────────────────────────────────────
+php:stan:
+  stage: quality
+  image: php:8.4-cli
+  extends:
+    - .composer-cache
+    - .install-deps
+  script:
+    - |
+      vendor/bin/phpstan analyse --configuration=phpstan.neon --no-progress --error-format=gitlab > phpstan-report.json 2>/dev/null || true
+      vendor/bin/phpstan analyse --configuration=phpstan.neon --no-progress --error-format=table
+  artifacts:
+    when: always
+    reports:
+      codequality: phpstan-report.json
+    expire_in: 7 days
+  allow_failure: true
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'

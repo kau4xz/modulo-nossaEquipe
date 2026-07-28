@@ -1,0 +1,49 @@
+#!/bin/bash
+# Valida o formato da mensagem de commit (Conventional Commits)
+
+COMMIT_MSG_FILE="$1"
+COMMIT_MSG=$(cat "$COMMIT_MSG_FILE")
+
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+NC='\033[0m'
+
+# Ignora commits de merge, revert e squash automáticos
+if echo "$COMMIT_MSG" | grep -qE "^(Merge|Revert|squash!|fixup!)"; then
+    exit 0
+fi
+
+# Padrão: tipo(escopo opcional): descrição
+# Tipos válidos: feat, fix, docs, style, refactor, test, chore, build, ci, perf, revert
+PATTERN="^(feat|fix|docs|style|refactor|test|chore|build|ci|perf|revert)(\([a-z0-9/_-]+\))?: .{1,100}$"
+
+if ! echo "$COMMIT_MSG" | grep -qE "$PATTERN"; then
+    echo -e "${RED}[ERRO]${NC} Formato de commit inválido."
+    echo ""
+    echo -e "Formato esperado: ${YELLOW}<tipo>(<escopo>): <descrição>${NC}"
+    echo ""
+    echo "Tipos válidos:"
+    echo "  feat     - nova funcionalidade"
+    echo "  fix      - correção de bug"
+    echo "  docs     - documentação"
+    echo "  style    - formatação (sem mudança de lógica)"
+    echo "  refactor - refatoração"
+    echo "  test     - testes"
+    echo "  chore    - tarefas de manutenção"
+    echo "  build    - sistema de build / dependências"
+    echo "  ci       - configuração de CI/CD"
+    echo "  perf     - melhoria de performance"
+    echo "  revert   - reverte commit anterior"
+    echo ""
+    echo "Exemplos válidos:"
+    echo "  feat(auth): adiciona login com OAuth"
+    echo "  fix(router): corrige redirecionamento 404"
+    echo "  docs: atualiza README com instruções de instalação"
+    echo ""
+    echo -e "Sua mensagem: ${RED}${COMMIT_MSG}${NC}"
+    exit 1
+fi
+
+echo -e "${GREEN}[OK]${NC} Mensagem de commit válida."
+exit 0

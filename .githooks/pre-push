@@ -1,0 +1,22 @@
+#!/bin/bash
+# Bloqueia push direto para branches protegidas
+
+PROTECTED_BRANCHES=("desenvolvimento" "estruturacao" "develop" "main" "master")
+
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+NC='\033[0m'
+
+while read local_ref local_sha remote_ref remote_sha; do
+    REMOTE_BRANCH=$(echo "$remote_ref" | sed 's|refs/heads/||')
+
+    for branch in "${PROTECTED_BRANCHES[@]}"; do
+        if [ "$REMOTE_BRANCH" = "$branch" ]; then
+            echo -e "${RED}[BLOQUEADO]${NC} Push direto para '${YELLOW}${REMOTE_BRANCH}${NC}' não é permitido."
+            echo -e "Abra um Merge Request para integrar suas alterações."
+            exit 1
+        fi
+    done
+done
+
+exit 0

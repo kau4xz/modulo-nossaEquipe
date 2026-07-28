@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<ruleset name="Palacio dos Leoes">
+    <description>PSR-12 + regras customizadas para o projeto</description>
+
+    <file>src</file>
+    <file>public/index.php</file>
+
+    <exclude-pattern>vendor/*</exclude-pattern>
+    <exclude-pattern>node_modules/*</exclude-pattern>
+    <exclude-pattern>logs/*</exclude-pattern>
+    <exclude-pattern>public/assets/*</exclude-pattern>
+
+    <arg name="basepath" value="."/>
+    <arg name="colors"/>
+    <arg name="parallel" value="4"/>
+    <arg value="sp"/>
+
+    <config name="php_version" value="80000"/>
+
+    <rule ref="PSR12"/>
+
+    <!-- Complexidade máxima de funções -->
+    <rule ref="Generic.Metrics.CyclomaticComplexity">
+        <properties>
+            <property name="complexity" value="15"/>
+            <property name="absoluteComplexity" value="20"/>
+        </properties>
+    </rule>
+
+    <!-- Tamanho máximo de linha (exceto views e templates HTML) -->
+    <rule ref="Generic.Files.LineLength">
+        <properties>
+            <property name="lineLimit" value="120"/>
+            <property name="absoluteLineLimit" value="150"/>
+        </properties>
+        <exclude-pattern>src/views/*</exclude-pattern>
+        <exclude-pattern>src/App/Utils/EmailSend.php</exclude-pattern>
+    </rule>
+
+    <!-- Proibir funções de debug -->
+    <rule ref="Generic.PHP.ForbiddenFunctions">
+        <properties>
+            <property name="forbiddenFunctions" type="array">
+                <element key="var_dump" value="null"/>
+                <element key="print_r" value="null"/>
+                <element key="var_export" value="null"/>
+                <element key="die" value="null"/>
+            </property>
+        </properties>
+    </rule>
+</ruleset>
