@@ -32,6 +32,18 @@ class Exemplo
         $this->updated_at = $updated_at;
     }
 
+    public static function fromArray(array $data): self
+    {
+        return new self(
+            $data['titulo'],
+            $data['descricao'] ?? null,
+            $data['status'] ?? null,
+            $data['created_at'] ?? null,
+            $data['updated_at'] ?? null,
+            $data['id'] ?? null
+        );
+    }
+
     public function getId(): ?string
     {
         return $this->id;

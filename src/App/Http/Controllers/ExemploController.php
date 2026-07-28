@@ -99,10 +99,7 @@ class ExemploController extends SharedController
             $request = (new ExemploRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
 
-            $this->exemploService->create(
-                $validated['titulo'],
-                $validated['descricao'] ?? null
-            );
+            $this->exemploService->create($validated);
             Toast::success('Registro criado com sucesso!');
             Url::redirect('/exemplo');
         } catch (ExemploException $e) {
@@ -118,11 +115,7 @@ class ExemploController extends SharedController
             $request = (new ExemploRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
 
-            $this->exemploService->update(
-                (string) $validated['id'],
-                $validated['titulo'],
-                $validated['descricao'] ?? null
-            );
+            $this->exemploService->update((string) $validated['id'], $validated);
             Toast::success('Registro atualizado com sucesso!');
             Url::redirect('/exemplo');
         } catch (ExemploException $e) {

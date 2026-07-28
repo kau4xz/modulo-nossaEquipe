@@ -8,8 +8,8 @@ use Src\App\Models\Exemplo;
 
 interface IExemploService
 {
-    public function create(string $titulo, ?string $descricao): Exemplo;
-    public function update(string $id, string $titulo, ?string $descricao): Exemplo;
+    public function create(array $data): Exemplo;
+    public function update(string $id, array $data): Exemplo;
     public function delete(string $id): bool;
     public function getAll(): array;
     public function getById(string $id): ?Exemplo;

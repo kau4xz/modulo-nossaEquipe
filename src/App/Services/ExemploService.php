@@ -16,16 +16,22 @@ class ExemploService implements IExemploService
     ) {
     }
 
-    public function create(string $titulo, ?string $descricao): Exemplo
+    public function create(array $data): Exemplo
     {
         $agora = date('Y-m-d H:i:s');
 
-        $novo = new Exemplo($titulo, $descricao, true, $agora, $agora);
+        $novo = Exemplo::fromArray([
+            'titulo' => $data['titulo'],
+            'descricao' => $data['descricao'] ?? null,
+            'status' => true,
+            'created_at' => $agora,
+            'updated_at' => $agora,
+        ]);
 
         return $this->repository->create($novo);
     }
 
-    public function update(string $id, string $titulo, ?string $descricao): Exemplo
+    public function update(string $id, array $data): Exemplo
     {
         $existente = $this->repository->getById($id);
 
@@ -33,14 +39,14 @@ class ExemploService implements IExemploService
             throw ExemploException::naoEncontrado();
         }
 
-        $atualizado = new Exemplo(
-            $titulo,
-            $descricao,
-            $existente->getStatus(),
-            $existente->getCreatedAt(),
-            date('Y-m-d H:i:s'),
-            $id
-        );
+        $atualizado = Exemplo::fromArray([
+            'id' => $id,
+            'titulo' => $data['titulo'],
+            'descricao' => $data['descricao'] ?? null,
+            'status' => $existente->getStatus(),
+            'created_at' => $existente->getCreatedAt(),
+            'updated_at' => date('Y-m-d H:i:s'),
+        ]);
 
         return $this->repository->update($atualizado);
     }

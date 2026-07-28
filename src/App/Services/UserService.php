@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Src\App\Services;
 
-use Src\App\Enums\Perfil;
 use Src\App\Enums\Status;
 use Src\App\Http\Exceptions\Usuario\UsuarioException;
 use Src\App\Infrastructure\IRepositories\IUserRepository;
@@ -23,21 +22,17 @@ class UserService implements IUserService
 
     public function createUser(array $data): User
     {
-        $nome = $data['nome'];
-        $email = $data['email'];
-        $senha = $data['senha'];
-        $perfil = Perfil::validar((int) $data['perfil']);
-
-        if ($this->repository->getUserByEmail($email) !== null) {
+        if ($this->repository->getUserByEmail($data['email']) !== null) {
             throw UsuarioException::emailInvalido();
         }
 
-        $user = User::criar(
-            $nome,
-            $email,
-            Senha::senha($senha),
-            $perfil
-        );
+        $user = User::fromArray([
+            'nome' => $data['nome'],
+            'email' => $data['email'],
+            'senha' => $data['senha'],
+            'perfil' => $data['perfil'],
+            'status' => Status::ATIVO->value,
+        ]);
 
         return $this->repository->createUser($user);
     }
@@ -63,15 +58,17 @@ class UserService implements IUserService
             throw UsuarioException::naoPodeDesativarProprioUsuario();
         }
 
-        $user = $this->getUserById($id);
-        $user->setNome($data['nome']);
-        $user->setEmail($data['email']);
-        $user->setPerfil(Perfil::validar((int) $data['perfil']));
-        $user->setStatus($novoStatus);
+        $existente = $this->getUserById($id);
 
-        if (! empty($data['senha'])) {
-            $user->atualizaSenha(Senha::senha($data['senha']));
-        }
+        $user = User::fromArray([
+            'id' => $id,
+            'nome' => $data['nome'],
+            'email' => $data['email'],
+            'senha' => empty($data['senha']) ? $existente->getSenha() : $data['senha'],
+            'perfil' => $data['perfil'],
+            'status' => $novoStatus->value,
+            'created_at' => $existente->getCreatedAt(),
+        ]);
 
         return $this->repository->updateUser($user);
     }

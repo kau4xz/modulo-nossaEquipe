@@ -45,30 +45,21 @@ class User
         $this->updatedAt = $updatedAt ?? new DateTimeImmutable();
     }
 
-    public static function criar(string $nome, string $email, Senha $senha, ?Perfil $perfil = null): self
+    public static function fromArray(array $data): self
     {
-        return new self(
-            $nome,
-            $email,
-            $senha,
-            $perfil ?? Perfil::USER,
-            Status::ATIVO,
-            new DateTimeImmutable(),
-            new DateTimeImmutable()
-        );
-    }
+        $senha = $data['senha'] instanceof Senha
+            ? $data['senha']
+            : Senha::senha((string) $data['senha']);
 
-    public static function atualizar(self $user)
-    {
         return new self(
-            $user->getNome(),
-            $user->getEmail(),
-            $user->getSenha(),
-            $user->getPerfil(),
-            $user->getStatus(),
-            $user->getCreatedAt(),
-            new DateTimeImmutable(),
-            $user->getId()
+            $data['nome'],
+            $data['email'],
+            $senha,
+            isset($data['perfil']) ? Perfil::validar((int) $data['perfil']) : null,
+            isset($data['status']) ? Status::validar((int) $data['status']) : null,
+            $data['created_at'] ?? null,
+            $data['updated_at'] ?? null,
+            $data['id'] ?? null
         );
     }
 

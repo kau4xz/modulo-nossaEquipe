@@ -12,6 +12,7 @@ class ExemploRequest extends Request
     public function rules(): array
     {
         return [
+            'id'        => ['nullable', 'string'],
             'titulo'    => ['required', 'string', 'min:3', 'max:150'],
             'descricao' => ['nullable', 'string', 'max:500'],
         ];
