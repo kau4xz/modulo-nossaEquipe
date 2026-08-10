@@ -53,8 +53,8 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
             <li>
                 <a href="<?= htmlspecialchars($urlExemplo) ?>"
                     class="<?= $activeExemplo ? $linkActive : $linkInactive ?>">
-                    <i class="fa-solid fa-layer-group text-base"></i>
-                    <span>Exemplo</span>
+                    <i class="fa-solid fa-newspaper"></i>
+                    <span>Notícias</span>
                 </a>
             </li>
         </ul>
