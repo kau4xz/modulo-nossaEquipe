@@ -1,0 +1,26 @@
+{
+  "scripts": {
+    "dev": "tailwindcss -i public/css/input.css -o public/css/app.css --watch",
+    "build": "tailwindcss -i public/css/input.css -o public/css/app.css --minify"
+  },
+  "dependencies": {
+    "swagger-ui": "^5.32.6",
+    "swagger-ui-dist": "^5.32.6"
+  },
+  "name": "projeto-base-mvc-php",
+  "version": "1.0.0",
+  "description": "Template de projeto PHP com arquitetura MVC + Repository Pattern + Injeção de Dependência, organizado em módulos independentes com auto-discovery de rotas e dependências.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs",
+    "test": "tests"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "tailwindcss": "^4.3.3"
+  }
+}

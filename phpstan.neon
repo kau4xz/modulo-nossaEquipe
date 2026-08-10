@@ -1,0 +1,10 @@
+parameters:
+    level: 5
+    paths:
+        - src/App
+        - src/Core
+    excludePaths:
+        - src/views
+        - src/routes
+        - src/config
+        - src/database

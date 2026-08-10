@@ -1,0 +1,107 @@
+#!/bin/bash
+# Espelha todas as validações do CI: sintaxe, phpcs, phpstan e phpinsights
+
+PROTECTED_BRANCHES=("desenvolvimento" "estruturacao" "develop" "main" "master")
+CURRENT_BRANCH=$(git symbolic-ref --short HEAD 2>/dev/null)
+
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+# ─── Branches protegidas ───────────────────────────────────────────────────────
+for branch in "${PROTECTED_BRANCHES[@]}"; do
+    if [ "$CURRENT_BRANCH" = "$branch" ]; then
+        echo -e "${RED}[BLOQUEADO]${NC} Commits diretos na branch '${YELLOW}${CURRENT_BRANCH}${NC}' não são permitidos."
+        echo -e "Crie uma branch de feature e abra um Merge Request."
+        exit 1
+    fi
+done
+
+STAGED_PHP=$(git diff --cached --name-only --diff-filter=ACM | grep '\.php$')
+
+if [ -z "$STAGED_PHP" ]; then
+    exit 0
+fi
+
+if [ ! -f "vendor/bin/phpcs" ]; then
+    echo -e "${YELLOW}[AVISO]${NC} vendor/ não encontrado. Execute: composer install"
+    exit 0
+fi
+
+FAILED=0
+
+# ─── Sintaxe PHP ──────────────────────────────────────────────────────────────
+echo -e "${BLUE}[sintaxe]${NC} Verificando sintaxe PHP..."
+
+SYNTAX_ERRORS=0
+while IFS= read -r file; do
+    OUTPUT=$(php -l "$file" 2>&1)
+    if echo "$OUTPUT" | grep -q "Parse error\|Fatal error"; then
+        echo "$OUTPUT"
+        SYNTAX_ERRORS=1
+    fi
+done <<< "$STAGED_PHP"
+
+if [ $SYNTAX_ERRORS -ne 0 ]; then
+    echo -e "${RED}[ERRO]${NC} Erros de sintaxe encontrados."
+    FAILED=1
+else
+    echo -e "${GREEN}[OK]${NC} sintaxe: nenhum erro encontrado."
+fi
+
+# ─── PHP CodeSniffer ──────────────────────────────────────────────────────────
+echo -e "${BLUE}[phpcs]${NC} Validando padrão PSR-12..."
+
+PHPCS_OUTPUT=$(echo "$STAGED_PHP" | xargs vendor/bin/phpcs --standard=phpcs.xml 2>&1)
+PHPCS_EXIT=$?
+
+if [ $PHPCS_EXIT -ne 0 ]; then
+    echo -e "${RED}[ERRO]${NC} Violações de código encontradas:\n"
+    echo "$PHPCS_OUTPUT"
+    echo -e "\nCorreção automática: ${YELLOW}vendor/bin/phpcbf --standard=phpcs.xml${NC}"
+    FAILED=1
+else
+    echo -e "${GREEN}[OK]${NC} phpcs: nenhuma violação encontrada."
+fi
+
+# ─── PHPStan ──────────────────────────────────────────────────────────────────
+if [ -f "vendor/bin/phpstan" ] && [ -f "phpstan.neon" ]; then
+    echo -e "${BLUE}[phpstan]${NC} Analisando tipos e erros estáticos..."
+
+    PHPSTAN_OUTPUT=$(vendor/bin/phpstan analyse --configuration=phpstan.neon --no-progress --memory-limit=1G 2>&1)
+    PHPSTAN_EXIT=$?
+
+    if [ $PHPSTAN_EXIT -ne 0 ]; then
+        echo -e "${RED}[ERRO]${NC} PHPStan encontrou problemas:\n"
+        echo "$PHPSTAN_OUTPUT"
+        FAILED=1
+    else
+        echo -e "${GREEN}[OK]${NC} phpstan: nenhum erro encontrado."
+    fi
+fi
+
+# ─── PHP Insights (aviso, não bloqueia) ───────────────────────────────────────
+if [ -f "vendor/bin/phpinsights" ]; then
+    echo -e "${BLUE}[insights]${NC} Verificando qualidade do código..."
+
+    INSIGHTS_OUTPUT=$(vendor/bin/phpinsights analyse src --no-interaction \
+        --min-quality=80 --min-complexity=80 --min-architecture=80 --min-style=80 2>&1)
+    INSIGHTS_EXIT=$?
+
+    if [ $INSIGHTS_EXIT -ne 0 ]; then
+        echo -e "${YELLOW}[AVISO]${NC} PHP Insights abaixo do mínimo (não bloqueia o commit):"
+        echo "$INSIGHTS_OUTPUT" | grep -E "pts|ERROR" | head -10
+    else
+        echo -e "${GREEN}[OK]${NC} phpinsights: scores acima de 80%."
+    fi
+fi
+
+# ─── Resultado final ──────────────────────────────────────────────────────────
+if [ $FAILED -ne 0 ]; then
+    echo -e "\n${RED}Commit bloqueado.${NC} Corrija os erros acima antes de commitar."
+    exit 1
+fi
+
+exit 0
