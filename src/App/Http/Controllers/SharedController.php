@@ -61,9 +61,12 @@ class SharedController
             'activeDashboard'  => $activePage === 'dashboard',
             'activeAdmin'      => $activePage === 'admin',
             'activeExemplo'    => $activePage === 'exemplo',
+            'activeNoticia'    => $activePage === 'noticia',
             'activeConfig'     => $activePage === 'configuracoes',
+
             'urlDashboard'     => Url::path('/home'),
             'urlExemplo'       => Url::path('/exemplo'),
+            'urlNoticia'       => Url::path('/noticia'),
             'urlAdmin'         => Url::path('/admin'),
             'urlConfig'        => Url::path('/configuracoes'),
             'urlLogout'        => Url::path('/logout'),

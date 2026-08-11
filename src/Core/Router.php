@@ -43,6 +43,7 @@ class Router
             }
 
             $params = $this->match($routePath, $uri);
+            
 
             if ($params !== false) {
                 $this->runMiddlewares($middleware);
