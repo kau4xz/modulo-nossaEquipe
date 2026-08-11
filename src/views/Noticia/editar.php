@@ -37,6 +37,7 @@
                     ><?= old('descricao', htmlspecialchars($item->getDescricao() ?? '')) ?></textarea>
                     <?= old_error('descricao') ?>
                 </div>
+                
             </div>
 
             <div class="mt-6 flex justify-end gap-3">

@@ -16,7 +16,7 @@
     </div>
 
     <div class="rounded-2xl border border-slate-200 bg-white p-6">
-        <form method="POST" action="<?= $urlSalvar ?>">
+        <form method="POST" enctype="multipart/form-data" action="<?= $urlSalvar ?>">
             <?= csrf() ?>
 
             <div class="space-y-4">
@@ -35,6 +35,20 @@
                     ><?= old('descricao') ?></textarea>
                     <?= old_error('descricao') ?>
                 </div>
+                <label class="block mb-2 text-sm font-medium text-slate-900" for="imagem">
+                Imagem
+                </label>
+
+                <!-- TODO: Estilizar melhor -->
+                <input 
+               class="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500"
+                id="imagem" 
+                type="file" 
+                accept="image/*"
+                name="imagem"
+                >
+                <p class="mt-1 text-sm text-slate-500" id="file_input_help">PNG, JPG ou JPEG (Tamanho máximo 2 MB).</p>
+
             </div>
 
             <div class="mt-6 flex justify-end gap-3">

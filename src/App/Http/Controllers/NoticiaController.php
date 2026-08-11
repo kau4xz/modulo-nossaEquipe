@@ -98,8 +98,9 @@ class NoticiaController extends SharedController
         try {
             $request = (new NoticiaRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
-
             $this->noticiaService->create($validated);
+
+        
             Toast::success('Registro criado com sucesso!');
             Url::redirect('/noticia');
         } catch (NoticiaException $e) {
@@ -108,6 +109,7 @@ class NoticiaController extends SharedController
             Url::redirect('/noticia');
         }
     }
+        // array(6) { ["name"]=> string(11) "rodolfo.jpg" ["full_path"]=> string(11) "rodolfo.jpg" ["type"]=> string(10) "image/jpeg" ["tmp_name"]=> string(27) "C:\Windows\Temp\php614B.tmp" ["error"]=> int(0) ["size"]=> int(24260) }
 
     public function atualizar(): void
     {

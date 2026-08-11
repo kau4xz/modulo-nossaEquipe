@@ -69,7 +69,7 @@ SET FOREIGN_KEY_CHECKS = 1;
 
 ------------------- Anotações John ----------
 -- 1. Tabela do módulo tb_noticia (no singular)
-CREATE TABLE `tb_exemplo` (
+CREATE TABLE `tb_noticia` (
   `id`          char(36) NOT NULL,
   `titulo`      varchar(150) NOT NULL,
   `descricao`   varchar(500) DEFAULT NULL,
@@ -78,3 +78,6 @@ CREATE TABLE `tb_exemplo` (
   `updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE
+
+ALTER TABLE `tb_noticia` 
+ADD COLUMN `imagem` VARCHAR(255) DEFAULT NULL AFTER `descricao`;

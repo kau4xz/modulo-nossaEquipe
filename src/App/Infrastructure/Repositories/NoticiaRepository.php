@@ -21,17 +21,17 @@ class NoticiaRepository implements INoticiaRepository
 
     public function create(Noticia $noticia): Noticia
     {
-        $sql = 'INSERT INTO tb_noticia (id, titulo, descricao, status, created_at, updated_at)
-                VALUES (:id, :titulo, :descricao, :status, :created_at, :updated_at)';
+        $sql = 'INSERT INTO tb_noticia (id, titulo, descricao, imagem, status, created_at, updated_at)
+                VALUES (:id, :titulo, :descricao, :imagem, :status, :created_at, :updated_at)';
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':id', $noticia->getId(), PDO::PARAM_STR);
         $stmt->bindValue(':titulo', $noticia->getTitulo());
         $stmt->bindValue(':descricao', $noticia->getDescricao());
+        $stmt->bindValue(':imagem', $noticia->getImagem());
         $stmt->bindValue(':status', $noticia->getStatus(), PDO::PARAM_BOOL);
         $stmt->bindValue(':created_at', $noticia->getCreatedAt());
         $stmt->bindValue(':updated_at', $noticia->getUpdatedAt());
         $stmt->execute();
-
         return $noticia;
     }
 
@@ -54,7 +54,7 @@ class NoticiaRepository implements INoticiaRepository
 
     public function getAll(): array
     {
-        $sql = 'SELECT id, titulo, descricao, status FROM tb_noticia ORDER BY id DESC';
+        $sql = 'SELECT id, titulo, imagem, descricao, status FROM tb_noticia ORDER BY id DESC';
         $stmt = $this->conn->query($sql);
         $itens = [];
 
@@ -62,6 +62,7 @@ class NoticiaRepository implements INoticiaRepository
             $itens[] = new Noticia(
                 $row['titulo'],
                 $row['descricao'],
+                $row['imagem'],
                 (bool) $row['status'],
                 null,
                 null,
@@ -84,6 +85,7 @@ class NoticiaRepository implements INoticiaRepository
             return new Noticia(
                 $row['titulo'],
                 $row['descricao'],
+                $row['imagem'],
                 (bool) $row['status'],
                 $row['created_at'],
                 $row['updated_at'],

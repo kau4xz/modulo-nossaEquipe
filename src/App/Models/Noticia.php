@@ -12,6 +12,7 @@ class Noticia
     private ?string $id;
     private string $titulo;
     private ?string $descricao;
+    private ?string $imagem;
     private ?bool $status;
     private ?string $created_at;
     private ?string $updated_at;
@@ -19,6 +20,7 @@ class Noticia
     public function __construct(
         string $titulo,
         ?string $descricao = null,
+        ?string $imagem = null,
         ?bool $status = null,
         ?string $created_at = null,
         ?string $updated_at = null,
@@ -27,6 +29,7 @@ class Noticia
         $this->setId($id);
         $this->titulo = $titulo;
         $this->descricao = $descricao;
+        $this->imagem = $imagem;
         $this->status = $status;
         $this->created_at = $created_at;
         $this->updated_at = $updated_at;
@@ -37,6 +40,7 @@ class Noticia
         return new self(
             $data['titulo'],
             $data['descricao'] ?? null,
+            $data['imagem'] ?? null,
             $data['status'] ?? null,
             $data['created_at'] ?? null,
             $data['updated_at'] ?? null,
@@ -72,6 +76,16 @@ class Noticia
     public function setDescricao(?string $descricao): void
     {
         $this->descricao = $descricao;
+    }
+
+    public function getImagem(): ?string
+    {
+        return $this->imagem;
+    }
+
+    public function setImagem(?string $imagem): void
+    {
+        $this->imagem = $imagem;
     }
 
     public function getStatus(): ?bool

@@ -8,6 +8,7 @@ use Src\App\Http\Exceptions\Noticia\NoticiaException;
 use Src\App\Infrastructure\IRepositories\INoticiaRepository;
 use Src\App\Models\Noticia;
 use Src\App\Services\IServices\INoticiaService;
+use Src\Core\FileService;
 
 class NoticiaService implements INoticiaService
 {
@@ -19,15 +20,17 @@ class NoticiaService implements INoticiaService
     public function create(array $data): Noticia
     {
         $agora = date('Y-m-d H:i:s');
-
+        $url = FileService::save($_FILES['imagem'], 'noticia'); 
+        echo $url;
+  
         $novo = Noticia::fromArray([
             'titulo' => $data['titulo'],
             'descricao' => $data['descricao'] ?? null,
+            'imagem'    => $url ?? null,
             'status' => true,
             'created_at' => $agora,
             'updated_at' => $agora,
         ]);
-
         return $this->repository->create($novo);
     }
 
