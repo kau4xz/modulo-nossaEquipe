@@ -14,15 +14,21 @@ class NoticiaService implements INoticiaService
 {
     public function __construct(
         private INoticiaRepository $repository
-    ) {
-    }
+    ) {}
 
     public function create(array $data): Noticia
     {
         $agora = date('Y-m-d H:i:s');
-        $url = FileService::save($_FILES['imagem'], 'noticia'); 
-        
-  
+        $tamanho = $_FILES['imagem']['size'];
+        // die();
+        if ($tamanho !== 0) {
+            var_dump($_FILES['imagem']);
+            $url = FileService::save($_FILES['imagem'], 'noticia');
+        } else {
+            throw NoticiaException::erroCriar();
+        }
+
+
         $novo = Noticia::fromArray([
             'titulo' => $data['titulo'],
             'descricao' => $data['descricao'] ?? null,
@@ -41,13 +47,20 @@ class NoticiaService implements INoticiaService
         if ($existente === null) {
             throw NoticiaException::naoEncontrado();
         }
-        $url = FileService::save($_FILES['imagem'], 'noticia'); 
+        $tamanho = $_FILES['imagem']['size'];
+
+        if ($tamanho !== 0) {
+            var_dump($_FILES['imagem']);
+            $url = FileService::save($_FILES['imagem'], 'noticia');
+        } else {
+           throw NoticiaException::erroAtualizar();
+        }
 
         $atualizado = Noticia::fromArray([
             'id'         => $id,
             'titulo'     => $data['titulo'],
             'descricao'  => $data['descricao'] ?? null,
-            'imagem'     => $url,
+            'imagem'     => $url ?? null,
             'status'     => $existente->getStatus(),
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
