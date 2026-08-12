@@ -27,6 +27,8 @@ desktop.ini
 # Assets
 *.map
 .history/
+public/uploads/noticia/*
+!public/uploads/noticias/.*
 
 # Temp files
 *.tmp

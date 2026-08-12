@@ -21,7 +21,7 @@ class NoticiaService implements INoticiaService
     {
         $agora = date('Y-m-d H:i:s');
         $url = FileService::save($_FILES['imagem'], 'noticia'); 
-        echo $url;
+        
   
         $novo = Noticia::fromArray([
             'titulo' => $data['titulo'],
@@ -41,12 +41,14 @@ class NoticiaService implements INoticiaService
         if ($existente === null) {
             throw NoticiaException::naoEncontrado();
         }
+        $url = FileService::save($_FILES['imagem'], 'noticia'); 
 
         $atualizado = Noticia::fromArray([
-            'id' => $id,
-            'titulo' => $data['titulo'],
-            'descricao' => $data['descricao'] ?? null,
-            'status' => $existente->getStatus(),
+            'id'         => $id,
+            'titulo'     => $data['titulo'],
+            'descricao'  => $data['descricao'] ?? null,
+            'imagem'     => $url,
+            'status'     => $existente->getStatus(),
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);

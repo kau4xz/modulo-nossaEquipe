@@ -38,12 +38,13 @@ class NoticiaRepository implements INoticiaRepository
     public function update(Noticia $noticia): Noticia
     {
         $sql = 'UPDATE tb_noticia
-                SET titulo = :titulo, descricao = :descricao,
+                SET titulo = :titulo, descricao = :descricao, imagem = :imagem,
                     status = :status, updated_at = :updated_at
                 WHERE id = :id';
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':titulo', $noticia->getTitulo());
         $stmt->bindValue(':descricao', $noticia->getDescricao());
+        $stmt->bindValue(':imagem', $noticia->getImagem());
         $stmt->bindValue(':status', $noticia->getStatus(), PDO::PARAM_BOOL);
         $stmt->bindValue(':updated_at', $noticia->getUpdatedAt());
         $stmt->bindValue(':id', $noticia->getId(), PDO::PARAM_STR);
