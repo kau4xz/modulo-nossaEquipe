@@ -51,16 +51,17 @@ class NoticiaService implements INoticiaService
             var_dump($_FILES['imagem']);
             $url = FileService::save($_FILES['imagem'], 'noticia');
         }
-
+     
         $atualizado = Noticia::fromArray([
             'id'         => $id,
             'titulo'     => $data['titulo'],
             'descricao'  => $data['descricao'] ?? null,
             'imagem'     => $url ?? null,
-            'status'     => $existente->getStatus(),
+            'status'     => $data['status'], //Solucao
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
         ]);
+                
 
         return $this->repository->update($atualizado);
     }

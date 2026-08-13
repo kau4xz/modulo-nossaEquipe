@@ -15,7 +15,8 @@ class NoticiaRequest extends Request
             'id'        => ['nullable', 'string'],
             'titulo'    => ['required', 'string', 'min:3', 'max:150'],
             'descricao' => ['nullable', 'string', 'max:500'],
-            'imagem'    => ['nullable', 'fileType:jpg,jpeg,png,webp', 'fileSize:2048']
+            'imagem'    => ['nullable', 'fileType:jpg,jpeg,png,webp', 'fileSize:2048'],
+            'status'    => ['required', 'boolean']
         ];
     }
 

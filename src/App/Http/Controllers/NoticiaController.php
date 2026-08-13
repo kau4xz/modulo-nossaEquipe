@@ -98,6 +98,7 @@ class NoticiaController extends SharedController
         try {
             $request = (new NoticiaRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
+            
             $this->noticiaService->create($validated);
 
         
@@ -115,6 +116,9 @@ class NoticiaController extends SharedController
         try {
             $request = (new NoticiaRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
+            // var_dump($validated);
+            // echo "🚀🚀🚀🚀";
+            // die();
 
             $this->noticiaService->update((string) $validated['id'], $validated);
             Toast::success('Registro atualizado com sucesso!');
