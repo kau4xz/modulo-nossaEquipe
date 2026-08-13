@@ -22,7 +22,6 @@ class NoticiaService implements INoticiaService
         $tamanho = $_FILES['imagem']['size'];
         // Uma forma de verificar se a imagem existe, deve haver melhores
         if ($tamanho !== 0) {
-            var_dump($_FILES['imagem']);
             $url = FileService::save($_FILES['imagem'], 'noticia');
         }
 
@@ -48,7 +47,6 @@ class NoticiaService implements INoticiaService
         $tamanho = $_FILES['imagem']['size'];
 
         if ($tamanho !== 0) {
-            var_dump($_FILES['imagem']);
             $url = FileService::save($_FILES['imagem'], 'noticia');
         }
      

@@ -81,7 +81,6 @@ class NoticiaRepository implements INoticiaRepository
         $stmt->bindValue(':id', $id, PDO::PARAM_STR);
         $stmt->execute();
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
         if ($row) {
             return new Noticia(
                 $row['titulo'],

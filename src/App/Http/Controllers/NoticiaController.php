@@ -30,6 +30,7 @@ class NoticiaController extends SharedController
                 'urlCriar'   => Url::path('/noticia/criar'),
                 'editarUrl'  => Url::path('/noticia/editar'),
                 'deletarUrl' => Url::path('/noticia/deletar'),
+                'visualizarUrl' => Url::path('/noticia/visualizar'),
             ]);
 
             return self::getPage('NOTICIA - LISTAGEM', $content, [
@@ -116,9 +117,6 @@ class NoticiaController extends SharedController
         try {
             $request = (new NoticiaRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
-            // var_dump($validated);
-            // echo "🚀🚀🚀🚀";
-            // die();
 
             $this->noticiaService->update((string) $validated['id'], $validated);
             Toast::success('Registro atualizado com sucesso!');
@@ -148,5 +146,21 @@ class NoticiaController extends SharedController
             Logger::error($e->getMessage());
             Url::redirect('/noticia');
         }
+    }
+    public function visualizar(): void{
+        $id = trim((string) filter_input(INPUT_POST, 'id'));   
+         if ($id === '') {
+            Toast::error('ID inválido.');
+            Url::redirect('/noticia');
+        }
+
+        try {
+            $this->noticiaService->getById($id);
+          
+        } catch (NoticiaException $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/noticia');
+        }     
     }
 }

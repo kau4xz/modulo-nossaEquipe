@@ -12,6 +12,7 @@
 
  * @var string $deletarUrl
 
+ * @var string $visualizarUrl
  */
 
 
@@ -89,12 +90,15 @@
 
                 <tr>
 
-                    <td class="px-5 py-3 font-medium text-slate-900">
+                   <td class="whitespace-nowrap px-5 py-4 font-medium text-slate-900">
                         <?= htmlspecialchars($item->getTitulo()) ?>
                     </td>
 
-                    <td class="px-5 py-3 text-slate-600">
-                        <?= htmlspecialchars($item->getDescricao() ?? '—') ?>
+                    <!-- Descrição (Cortada estritamente em 50 caracteres com ... no final) -->
+                    <td class="px-5 py-4 text-slate-600" title="<?= htmlspecialchars($item->getDescricao() ?? '') ?>">
+                        <?= $item->getDescricao() 
+                            ? htmlspecialchars(mb_strimwidth($item->getDescricao(), 0, 50, '...')) 
+                            : '—' ?>
                     </td>
 
                     <td class="px-5 py-3">
@@ -111,13 +115,12 @@
 
                     <td class="px-5 py-3 text-right">
                         <div class="flex items-center justify-end gap-2">
-                            <?php if (!empty($item->getImagem())) : ?>
-                            <a href="public<?= htmlspecialchars($item->getImagem()) ?>" target="_blank"
-                                class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50"
-                                title="Ver imagem cadastrada">
-                                <i class="fa-solid fa-image"></i> Ver imagem
+                            <!-- NOVO BOTÃO: Ver Notícia -->
+                            <a href="<?= $visualizarUrl . '?id=' . $item->getId() ?>"
+                                class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-50"
+                                title="Ver detalhes da notícia">
+                                <i class="fa-solid fa-eye"></i> Ver
                             </a>
-                            <?php endif; ?>
 
                             <a href="<?= $editarUrl . '?id=' . $item->getId() ?>"
                                 class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
