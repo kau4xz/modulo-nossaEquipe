@@ -8,6 +8,7 @@ use Src\App\Http\Exceptions\Galeria\GaleriaExecptions;
 use Src\App\Infrastructure\IRepositories\IGaleriaRepository;
 use Src\App\Models\Galeria;
 use Src\App\Services\IServices\IGaleriaService;
+use Src\Core\FileService;
 
 class GaleriaService implements IGaleriaService
 {
@@ -16,23 +17,16 @@ class GaleriaService implements IGaleriaService
     ) {
     }
 
-    public function create(array $data): Galeria
+    public function create(array $data): void
     {
         $agora = date('Y-m-d H:i:s');
+        $imagem = $data['caminho'];
+        $caminho = FileService::save($imagem, 'galeria');
 
-        $novo = Galeria::fromArray([
-            'titulo' => $data['titulo'],
-            'legenda' => $data['legenda'] ?? null,
-            'status' => true,
-            'tipo' => $data['tipo'],
-            'created_at' => $agora,
-            'updated_at' => $agora,
-        ]);
-
-        return $this->repository->create($novo);
+        $this->repository->create(Galeria::fromArray($data));
     }
 
-    public function update(string $id, array $data): Galeria
+    public function update(string $id, array $data): void
     {
         $existente = $this->repository->getById($id);
 
@@ -40,17 +34,11 @@ class GaleriaService implements IGaleriaService
             throw GaleriaExecptions::naoEncontrado();
         }
 
-        $atualizado = Galeria::fromArray([
-            'id' => $id,
-            'titulo' => $data['titulo'],
-            'legenda' => $data['legenda'] ?? null,
-            'tipo' => $data['tipo'] ?? null,
-            'status' => $existente->getStatus(),
-            'created_at' => $existente->getCreatedAt(),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
+        $imagem = $data['caminho'];
+        FileService::update($imagem, 'produtos', $existente->getCaminho());         
 
-        return $this->repository->update($atualizado);
+
+        $this->repository->update(Galeria::fromArray($data));
     }
 
     public function delete(string $id): bool
@@ -60,6 +48,8 @@ class GaleriaService implements IGaleriaService
         if ($existente === null) {
             throw GaleriaExecptions::naoEncontrado();
         }
+
+        FileService::delete($existente->getCaminho());
 
         return $this->repository->delete($id);
     }

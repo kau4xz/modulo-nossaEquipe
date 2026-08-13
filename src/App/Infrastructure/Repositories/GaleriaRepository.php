@@ -21,16 +21,17 @@ class GaleriaRepository implements IGaleriaRepository
 
     public function create(Galeria $galeria): Galeria
     {
-        $sql = 'INSERT INTO tb_galeria (id, titulo, legenda, status, created_at, updated_at, tipo)
-                VALUES (:id, :titulo, :descricao, :status, :created_at, :updated_at, :tipo)';
+        $sql = 'INSERT INTO tb_galeria (id, titulo, legenda, status, created_at, updated_at, tipo, caminho)
+                VALUES (:id, :titulo, :legenda, :status, :created_at, :updated_at, :tipo :caminho)';
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':id', $galeria->getId(), PDO::PARAM_STR);
         $stmt->bindValue(':titulo', $galeria->getTitulo());
-        $stmt->bindValue(':descricao', $galeria->getLegenda());
+        $stmt->bindValue(':legenda', $galeria->getLegenda());
         $stmt->bindValue(':status', $galeria->getStatus(), PDO::PARAM_BOOL);
         $stmt->bindValue(':created_at', $galeria->getCreatedAt());
         $stmt->bindValue(':updated_at', $galeria->getUpdatedAt());
         $stmt->bindValue(':tipo', $galeria->getTipo());
+        $stmt->bindValue(':caminho', $galeria->getCaminho());
         $stmt->execute();
 
         return $galeria;
@@ -44,7 +45,7 @@ class GaleriaRepository implements IGaleriaRepository
                 WHERE id = :id';
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':titulo', $galeria->getTitulo());
-        $stmt->bindValue(':descricao', $galeria->getLegenda());
+        $stmt->bindValue(':legenda', $galeria->getLegenda());
         $stmt->bindValue(':status', $galeria->getStatus(), PDO::PARAM_BOOL);
         $stmt->bindValue(':updated_at', $galeria->getUpdatedAt());
         $stmt->bindValue(':id', $galeria->getId(), PDO::PARAM_STR);
@@ -56,16 +57,17 @@ class GaleriaRepository implements IGaleriaRepository
 
     public function getAll(): array
     {
-        $sql = 'SELECT id, titulo, descricao, status, tipo FROM tb_galeria ORDER BY id DESC';
+        $sql = 'SELECT id, titulo, legenda, status, tipo, caminho FROM tb_galeria ORDER BY id DESC';
         $stmt = $this->conn->query($sql);
         $itens = [];
 
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
             $itens[] = new Galeria(
                 $row['titulo'],
-                $row['descricao'],
+                $row['legenda'],
                 (bool) $row['status'],
                 $row['tipo'],
+                $row['caminho'],
                 null,
                 null,
                 $row['id']
@@ -86,11 +88,12 @@ class GaleriaRepository implements IGaleriaRepository
         if ($row) {
             return new Galeria(
                 $row['titulo'],
-                $row['descricao'],
+                $row['legenda'],
                 (bool) $row['status'],
                 $row['tipo'],
                 $row['created_at'],
                 $row['updated_at'],
+                $row['caminho'],
                 $row['id']
             );
         }
@@ -109,11 +112,12 @@ class GaleriaRepository implements IGaleriaRepository
         if ($row) {
             return new Galeria(
                 $row['titulo'],
-                $row['descricao'],
+                $row['legenda'],
                 (bool) $row['status'],
                 $row['tipo'],
                 $row['created_at'],
                 $row['updated_at'],
+                $row['caminho'],
                 $row['id']
             );
         }
