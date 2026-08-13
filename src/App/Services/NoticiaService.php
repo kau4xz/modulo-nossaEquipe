@@ -20,12 +20,10 @@ class NoticiaService implements INoticiaService
     {
         $agora = date('Y-m-d H:i:s');
         $tamanho = $_FILES['imagem']['size'];
-        // die();
+        // Uma forma de verificar se a imagem existe, deve haver melhores
         if ($tamanho !== 0) {
             var_dump($_FILES['imagem']);
             $url = FileService::save($_FILES['imagem'], 'noticia');
-        } else {
-            throw NoticiaException::erroCriar();
         }
 
 
@@ -52,8 +50,6 @@ class NoticiaService implements INoticiaService
         if ($tamanho !== 0) {
             var_dump($_FILES['imagem']);
             $url = FileService::save($_FILES['imagem'], 'noticia');
-        } else {
-           throw NoticiaException::erroAtualizar();
         }
 
         $atualizado = Noticia::fromArray([
