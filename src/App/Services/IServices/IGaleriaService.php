@@ -8,8 +8,8 @@ use Src\App\Models\Galeria;
 
 interface IGaleriaService
 {
-    public function create(array $data): void;
-    public function update(string $id, array $data): void;
+    public function create(array $data): Galeria;
+    public function update(string $id, array $data): Galeria;
     public function delete(string $id): bool;
     public function getAll(): array;
     public function getById(string $id): ?Galeria;

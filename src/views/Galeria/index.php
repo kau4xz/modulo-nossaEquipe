@@ -46,7 +46,8 @@
                 <?php foreach ($itens as $item) : ?>
                 <tr>
                     <td class="px-5 py-3 font-medium text-slate-900"><?= htmlspecialchars($item->getTitulo()) ?></td>
-                    <td class="px-5 py-3 text-slate-600"><?= htmlspecialchars($item->getDescricao() ?? '—') ?></td>
+                    <td class="px-5 py-3 text-slate-600"><?= htmlspecialchars($item->getLegenda() ?? '—') ?></td>
+                    <td class="px-5 py-3 text-slate-600"><?= htmlspecialchars($item->getTipo() ?? '—') ?></td>
                     <td class="px-5 py-3">
                         <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium
                             <?= $item->getStatus() ? 'bg-green-100 text-green-700' : 'bg-rose-100 text-rose-700' ?>">

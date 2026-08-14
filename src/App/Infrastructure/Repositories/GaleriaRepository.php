@@ -22,7 +22,7 @@ class GaleriaRepository implements IGaleriaRepository
     public function create(Galeria $galeria): Galeria
     {
         $sql = 'INSERT INTO tb_galeria (id, titulo, legenda, status, created_at, updated_at, tipo, caminho)
-                VALUES (:id, :titulo, :legenda, :status, :created_at, :updated_at, :tipo :caminho)';
+                VALUES (:id, :titulo, :legenda, :status, :created_at, :updated_at, :tipo, :caminho)';
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':id', $galeria->getId(), PDO::PARAM_STR);
         $stmt->bindValue(':titulo', $galeria->getTitulo());

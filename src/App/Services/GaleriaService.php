@@ -17,16 +17,24 @@ class GaleriaService implements IGaleriaService
     ) {
     }
 
-    public function create(array $data): void
+    public function create(array $data): Galeria
     {
         $agora = date('Y-m-d H:i:s');
-        $imagem = $data['caminho'];
-        $caminho = FileService::save($imagem, 'galeria');
 
-        $this->repository->create(Galeria::fromArray($data));
+        $novo = Galeria::fromArray([
+            'titulo' => $data['titulo'],
+            'legenda' => $data['legenda'] ?? null,
+            'status' => true,
+            'created_at' => $agora,
+            'updated_at' => $agora,
+            'tipo' => $data['tipo'],
+            'caminho' => FileService::save($_FILES['imagem'], 'galeria')
+        ]);
+
+        return $this->repository->create($novo);
     }
 
-    public function update(string $id, array $data): void
+    public function update(string $id, array $data): Galeria
     {
         $existente = $this->repository->getById($id);
 
@@ -34,11 +42,18 @@ class GaleriaService implements IGaleriaService
             throw GaleriaExecptions::naoEncontrado();
         }
 
-        $imagem = $data['caminho'];
-        FileService::update($imagem, 'produtos', $existente->getCaminho());         
+        $atualizado = Galeria::fromArray([
+            'id' => $id,
+            'titulo' => $data['titulo'],
+            'descricao' => $data['descricao'] ?? null,
+            'tipo' => $data['tipo'],
+            'status' => $existente->getStatus(),
+            'created_at' => $existente->getCreatedAt(),
+            'updated_at' => date('Y-m-d H:i:s'),
+            FileService::update($_FILES['imagem'], 'galeria', $existente->getCaminho())
+        ]);
 
-
-        $this->repository->update(Galeria::fromArray($data));
+        return $this->repository->update($atualizado);
     }
 
     public function delete(string $id): bool
