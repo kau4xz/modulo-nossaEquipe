@@ -114,6 +114,7 @@ class NoticiaController extends SharedController
 
     public function atualizar(): void
     {
+     
         try {
             $request = (new NoticiaRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
@@ -147,20 +148,29 @@ class NoticiaController extends SharedController
             Url::redirect('/noticia');
         }
     }
-    public function visualizar(): void{
-        $id = trim((string) filter_input(INPUT_POST, 'id'));   
-         if ($id === '') {
-            Toast::error('ID inválido.');
-            Url::redirect('/noticia');
-        }
+    public function visualizar(){
+        
+        $id = trim((string) filter_input(INPUT_GET, 'id'));
+        
+       
 
         try {
-            $this->noticiaService->getById($id);
-          
+            $toast = Toast::pull();
+
+            $titulo = "card";
+            $content = View::render('Noticia/visualizar', ['titulo' => $titulo]);
+            $card = $this->noticiaService->getById($id);
+
+            return self::getPage('PROJETO - ' . "CARD", $content, [
+            'showSidebar' => true,
+            'activePage' => 'noticia',
+        ], $toast);
         } catch (NoticiaException $e) {
             Toast::error($e->getMessage());
             Logger::error($e->getMessage());
             Url::redirect('/noticia');
         }     
     }
+
+    
 }

@@ -48,28 +48,10 @@
 
                 </select> -->
                 
-                <!-- TODO: Estilizar melhor -->
-                <label class="block mb-2 text-sm font-medium text-slate-900" for="imagem">
-                    Imagem
-                </label>
-                <input
-                    class="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500"
-                    id="imagem" type="file" accept="image/*" name="imagem">
-                <img src="" alt="Pré-visualização" class="max-h-32 max-w-32 hidden" id="preview">
-                <p class="mt-1 text-sm text-slate-500" id="file_input_help">PNG, JPG ou JPEG (Tamanho máximo 2 MB).</p>
-
+               
             </div>
 
-            <div class="mt-6 flex justify-end gap-3">
-                <a href="<?= $voltarUrl ?>"
-                    class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
-                    Cancelar
-                </a>
-                <button type="submit"
-                    class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
-                    <i class="fa-solid fa-floppy-disk"></i> Salvar
-                </button>
-            </div>
+           
         </form>
     </div>
 </div>
