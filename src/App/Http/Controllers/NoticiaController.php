@@ -158,8 +158,11 @@ class NoticiaController extends SharedController
             $toast = Toast::pull();
 
             $titulo = "card";
-            $content = View::render('Noticia/visualizar', ['titulo' => $titulo]);
-            $card = $this->noticiaService->getById($id);
+            $item = $this->noticiaService->getById($id);
+            $content = View::render('Noticia/visualizar', [
+                'item' => $item,
+                'voltarUrl' => Url::path('/noticia'),
+            ]);
 
             return self::getPage('PROJETO - ' . "CARD", $content, [
             'showSidebar' => true,
