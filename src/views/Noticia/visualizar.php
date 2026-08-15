@@ -9,7 +9,7 @@
 ?>
 
 <div class="space-y-6">
-    <!-- Cabeçalho e Ações -->
+    <!-- Cabeçalho e Ações (Fora do Card) -->
     <div class="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
             <a href="<?= $voltarUrl ?>" class="inline-flex items-center gap-2 text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
@@ -26,53 +26,48 @@
         <?php endif; ?>
     </div>
 
-    <!-- Card Principal de Exibição -->
-    <div class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
-        
-        <!-- Banner / Imagem de Capa -->
-        <?php if ($item->getImagem()) : ?>
-            <div class="relative max-h-96 w-full overflow-hidden border-b border-slate-200 bg-slate-100">
-                <img src="public<?= htmlspecialchars($item->getImagem()) ?>" 
-                     alt="<?= htmlspecialchars($item->getTitulo()) ?>" 
-                     class="h-full w-full object-cover">
-            </div>
-        <?php else : ?>
-            <div class="flex h-44 w-full items-center justify-center border-b border-slate-200 bg-slate-50 text-slate-400">
-                <div class="text-center">
-                    <i class="fa-regular fa-image text-3xl mb-1"></i>
-                    <p class="text-xs font-medium">Notícia sem imagem de capa</p>
-                </div>
-            </div>
-        <?php endif; ?>
-
-        <!-- Conteúdo do Card -->
-        <div class="p-6 sm:p-8 space-y-6">
+    <!-- Card Principal -->
+    <div class="rounded-2xl border border-slate-200 bg-white p-6 sm:p-8 shadow-sm">
+        <div class="space-y-8">
             
-            <!-- Linha de Status e ID -->
-            <div class="flex items-center justify-between gap-4">
-                <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold
-                    <?= $item->getStatus() ? 'bg-green-100 text-green-700' : 'bg-rose-100 text-rose-700' ?>">
-                    <span class="h-2 w-2 rounded-full <?= $item->getStatus() ? 'bg-green-500' : 'bg-rose-500' ?>"></span>
-                    <?= $item->getStatus() ? 'Ativo' : 'Inativo' ?>
-                </span>
+            <!-- 1. Título e Status -->
+            <div class="space-y-4 border-b border-slate-100 pb-6">
+                <div class="flex items-center justify-between gap-4">
+                    <span class="inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold
+                        <?= $item->getStatus() ? 'bg-green-100 text-green-700' : 'bg-rose-100 text-rose-700' ?>">
+                        <span class="h-2 w-2 rounded-full <?= $item->getStatus() ? 'bg-green-500' : 'bg-rose-500' ?>"></span>
+                        <?= $item->getStatus() ? 'Ativo' : 'Inativo' ?>
+                    </span>
 
-                <span class="text-xs font-medium text-slate-400">
-                    ID: #<?= htmlspecialchars($item->getId()) ?>
-                </span>
-            </div>
-
-            <!-- Título Principal -->
-            <div>
+                    <span class="text-xs font-medium text-slate-400">
+                        ID: #<?= htmlspecialchars($item->getId()) ?>
+                    </span>
+                </div>
+                
                 <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
                     <?= htmlspecialchars($item->getTitulo()) ?>
                 </h2>
             </div>
 
-            <hr class="border-slate-100">
+            <!-- 2. Imagem (Menor e Centralizada) -->
+            <?php if ($item->getImagem()) : ?>
+                <div class="flex justify-center">
+                    <img src="public<?= htmlspecialchars($item->getImagem()) ?>" 
+                         alt="<?= htmlspecialchars($item->getTitulo()) ?>" 
+                         class="h-64 w-full max-w-lg rounded-xl border border-slate-200 object-cover shadow-sm">
+                </div>
+            <?php else : ?>
+                <div class="mx-auto flex h-32 w-full max-w-lg items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-slate-400">
+                    <div class="text-center">
+                        <i class="fa-regular fa-image text-2xl mb-1"></i>
+                        <p class="text-xs font-medium">Sem imagem</p>
+                    </div>
+                </div>
+            <?php endif; ?>
 
-            <!-- Bloco da Descrição -->
-            <div class="space-y-2">
-                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Descrição / Conteúdo</span>
+            <!-- 3. Descrição / Legenda -->
+            <div class="space-y-2 pt-2">
+                <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Conteúdo da Notícia</span>
                 <p class="text-base leading-relaxed text-slate-700 whitespace-pre-line">
                     <?= $item->getDescricao() 
                         ? nl2br(htmlspecialchars($item->getDescricao())) 
