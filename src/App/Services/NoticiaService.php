@@ -37,32 +37,35 @@ class NoticiaService implements INoticiaService
         return $this->repository->create($novo);
     }
 
-    public function update(string $id, array $data): Noticia
-    {
-        $existente = $this->repository->getById($id);
+   public function update(string $id, array $data): Noticia
+{
+    $existente = $this->repository->getById($id);
 
-        if ($existente === null) {
-            throw NoticiaException::naoEncontrado();
-        }
-        $tamanho = $_FILES['imagem']['size'];
-
-        if ($tamanho !== 0) {
-            $url = FileService::save($_FILES['imagem'], 'noticia');
-        }
-     
-        $atualizado = Noticia::fromArray([
-            'id'         => $id,
-            'titulo'     => $data['titulo'],
-            'descricao'  => $data['descricao'] ?? null,
-            'imagem'     => $url ?? null,
-            'status'     => $data['status'], //Solucao
-            'created_at' => $existente->getCreatedAt(),
-            'updated_at' => date('Y-m-d H:i:s'),
-        ]);
-                
-
-        return $this->repository->update($atualizado);
+    if ($existente === null) {
+        throw NoticiaException::naoEncontrado();
     }
+
+    $urlImagem = $existente->getImagem();
+    if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
+        
+        FileService::delete($urlImagem);
+        
+        $urlImagem = FileService::save($_FILES['imagem'], 'noticia');
+        
+    }
+
+    $atualizado = Noticia::fromArray([
+        'id'         => $id,
+        'titulo'     => $data['titulo'],
+        'descricao'  => $data['descricao'] ?? null,
+        'imagem'     => $urlImagem, 
+        'status'     => $data['status'],
+        'created_at' => $existente->getCreatedAt(),
+        'updated_at' => date('Y-m-d H:i:s'),
+    ]);
+
+    return $this->repository->update($atualizado);
+}
 
     public function delete(string $id): bool
     {
