@@ -57,45 +57,50 @@ $userIsAtivo = $item->getStatus();
                     </select>
                 </div>
 
-                <!-- ------------------------------- -->
+               <!-- ------------------------------- -->
                 <!-- Input file da imagem            -->
                 <!-- ------------------------------- -->
                 <div class="space-y-4">
                     <span class="block text-sm font-medium text-slate-700">Imagem da Capa</span>
 
+                    <!-- Input oculto que avisa o PHP se é para excluir a imagem no BD -->
+                    <input type="hidden" id="input_remover_imagem" name="remover_imagem" value="0">
+
+                    <!-- Container da imagem atual (Oculto se não houver) -->
                     <?php if ($item->getImagem()): ?>
-                        <div class="rounded-xl border border-slate-200 bg-slate-50 p-4" id="box_imagem_atual">
-                            <div class="flex items-center gap-4">
-                                <img src="public<?= htmlspecialchars($item->getImagem()) ?>" alt="Pré-visualização" class="h-16 w-16 rounded-lg object-cover border border-slate-200" id="preview">
-                                
-                                <div>
-                                    <p class="text-sm font-semibold text-slate-700">Imagem atual salva</p>
-                                    <p class="text-xs text-slate-500 mt-0.5">Para manter, ignore esta etapa.</p>
-                                    
-                                    <div class="mt-2 flex items-center gap-2">
-                                        <input type="checkbox" id="remover_imagem" name="remover_imagem" value="1" 
-                                            class="h-4 w-4 rounded border-slate-300 text-slate-900 focus:ring-slate-900">
-                                        <label for="remover_imagem" class="text-xs font-medium text-slate-700">
-                                            Excluir imagem
-                                        </label>
-                                    </div>
-                                </div>
+                        <div class="flex items-center gap-4 rounded-xl border border-slate-200 bg-slate-50 p-4 transition-all" id="box_imagem_atual">
+                            <img src="public<?= htmlspecialchars($item->getImagem()) ?>" alt="Imagem atual" class="h-[200px] w-[300px] rounded-xl object-cover border border-slate-200 shadow-sm">
+                            <div>
+                                <p class="text-sm font-semibold text-slate-700">Imagem atual salva</p>
+                                <p class="text-xs text-slate-500 mt-0.5">Esta é a capa atual da notícia.</p>
                             </div>
                         </div>
                     <?php endif; ?>
 
+                    <!-- Container do preview da NOVA imagem (Oculto por padrão) -->
+                    <div class="hidden flex items-center gap-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4 transition-all" id="box_preview_novo">
+                        <img id="preview" src="" alt="Pré-visualização" class="h-[200px] w-[300px rounded-xl object-cover border border-slate-200 shadow-sm">
+                        <div>
+                            <p class="text-sm font-semibold text-blue-800">Nova imagem selecionada</p>
+                            <p class="text-xs text-blue-600 mt-0.5" id="nome_arquivo_selecionado"></p>
+                        </div>
+                    </div>
+
+                    <!-- Botões: Selecionar e Excluir -->
                     <div class="flex items-center gap-3">
                         <label for="imagem" class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                             <i class="fa-solid fa-upload"></i> 
-                            <?= $item->getImagem() ? 'Escolher outra imagem' : 'Selecionar arquivo' ?>
+                            <span id="label_texto_btn"><?= $item->getImagem() ? 'Trocar imagem' : 'Selecionar arquivo' ?></span>
                         </label>
                         
                         <input id="imagem" type="file" accept="image/*" name="imagem" class="hidden">
                         
-                        <span id="texto_arquivo" class="text-sm text-slate-500">
-                            <?= $item->getImagem() ? 'Nenhum novo arquivo selecionado' : 'Nenhum arquivo escolhido' ?>
-                        </span>
+                        <!-- O Botão global de remover -->
+                        <button type="button" id="btn_remover_imagem" class="<?= $item->getImagem() ? 'inline-flex' : 'hidden' ?> items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700">
+                            <i class="fa-solid fa-trash"></i> Excluir imagem
+                        </button>
                     </div>
+
                     <p class="mt-1 text-xs text-slate-500">PNG, JPG ou JPEG (Tamanho máximo 2 MB).</p>
                 </div>
             </div>
