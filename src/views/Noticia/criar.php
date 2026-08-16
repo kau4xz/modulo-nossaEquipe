@@ -19,6 +19,9 @@
             <?= csrf() ?>
 
             <div class="space-y-4">
+                <!-- ------------------------------- -->
+                <!-- Input Titulo  -->
+                <!-- ------------------------------- -->
                 <div>
                     <label for="titulo" class="block text-sm font-medium text-slate-700">Título <span
                             class="text-rose-600">*</span></label>
@@ -28,37 +31,64 @@
                     <?= old_error('titulo') ?>
                 </div>
 
+                <!-- ------------------------------- -->
+                <!-- Input Descricao  -->
+                <!-- ------------------------------- -->
                 <div>
                     <label for="descricao" class="block text-sm font-medium text-slate-700">Descrição</label>
-                    <textarea id="descricao" name="descricao" maxlength="500" rows="3"
+                    <textarea id="descricao" name="descricao" maxlength="3000" rows="3"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"><?= old('descricao') ?></textarea>
                     <?= old_error('descricao') ?>
                 </div>
 
+                <!-- ------------------------------- -->
                 <!-- Status Select  -->
-
-                <label for="status" class="text-sm font-medium text-slate-700">Status</label>
-                <label for="status" class="text-sm font-medium text-slate-700">Status</label>
-
-                <select id="status" name="status" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500">
-
-                    <option value="1">Ativo</option>
-                    <option value="0">Inativo </option>
-
-                </select>
+                <!-- ------------------------------- -->
+                <div>
+                    <label for="status" class="block text-sm font-medium text-slate-700">Status</label>
+                    <select id="status" name="status" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
+                        <option value="1">Ativo</option>
+                        <option value="0">Inativo</option>
+                    </select>
+                </div>
                 
-                <!-- TODO: Estilizar melhor -->
-                <label class="block mb-2 text-sm font-medium text-slate-900" for="imagem">
-                    Imagem
-                </label>
-                <input
-                    class="file:mr-4 file:rounded-full file:border-0 file:bg-violet-50 file:px-4 file:py-2 file:text-sm file:font-semibold file:text-violet-700 hover:file:bg-violet-100 dark:file:bg-violet-600 dark:file:text-violet-100 dark:hover:file:bg-violet-500"
-                    id="imagem" type="file" accept="image/*" name="imagem">
-                <img src="" alt="Pré-visualização" class="max-h-32 max-w-32 hidden" id="preview">
-                <p class="mt-1 text-sm text-slate-500" id="file_input_help">PNG, JPG ou JPEG (Tamanho máximo 2 MB).</p>
+                <!-- ------------------------------- -->
+                <!-- Input file da imagem            -->
+                <!-- ------------------------------- -->
+                <div class="space-y-4">
+                    <span class="block text-sm font-medium text-slate-700">Imagem da Capa</span>
 
+                    <!-- Container do preview da NOVA imagem (Oculto por padrão) -->
+                    <div class="hidden items-center gap-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4 transition-all" id="box_preview_novo">
+                        <img id="preview" src="" alt="Pré-visualização" class="h-[200px] w-[300px] rounded-xl object-cover border border-slate-200 shadow-sm">
+                        <div>
+                            <p class="text-sm font-semibold text-blue-800">Nova imagem selecionada</p>
+                            <p class="text-xs text-blue-600 mt-0.5" id="nome_arquivo_selecionado"></p>
+                        </div>
+                    </div>
+
+                    <!-- Botões: Selecionar e Excluir -->
+                    <div class="flex items-center gap-3">
+                        <label for="imagem" class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                            <i class="fa-solid fa-upload"></i> 
+                            <span id="label_texto_btn">Selecionar arquivo</span>
+                        </label>
+                        
+                        <input id="imagem" type="file" accept="image/*" name="imagem" class="hidden">
+                        
+                        <!-- O Botão global de remover -->
+                        <button type="button" id="btn_remover_imagem" class="hidden items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700">
+                            <i class="fa-solid fa-trash"></i> Excluir imagem
+                        </button>
+                    </div>
+
+                    <p class="mt-1 text-xs text-slate-500">PNG, JPG ou JPEG (Tamanho máximo 2 MB).</p>
+                </div>
             </div>
 
+            <!-- ------------------------------- -->
+            <!-- Botões finais  -->
+            <!-- ------------------------------- -->
             <div class="mt-6 flex justify-end gap-3">
                 <a href="<?= $voltarUrl ?>"
                     class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
@@ -72,4 +102,4 @@
         </form>
     </div>
 </div>
-<script src="public/js/preview-img.js" defer />
+<script src="public/js/preview-img.js" defer></script>

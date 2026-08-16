@@ -41,7 +41,7 @@ $userIsAtivo = $item->getStatus();
                 <!-- ------------------------------- -->
                 <div>
                     <label for="descricao" class="block text-sm font-medium text-slate-700">Descrição</label>
-                    <textarea id="descricao" name="descricao" maxlength="500" rows="3"
+                    <textarea id="descricao" name="descricao" maxlength="3000" rows="3"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"><?= htmlspecialchars($item->getDescricao()) ?? '' ?></textarea>
                     <?= old_error('descricao') ?>
                 </div>
@@ -79,7 +79,7 @@ $userIsAtivo = $item->getStatus();
 
                     <!-- Container do preview da NOVA imagem (Oculto por padrão) -->
                     <div class="hidden items-center gap-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4 transition-all" id="box_preview_novo">
-                        <img id="preview" src="" alt="Pré-visualização" class="h-[200px] w-[300px rounded-xl object-cover border border-slate-200 shadow-sm">
+                        <img id="preview" src="" alt="Pré-visualização" class="h-[200px] w-[300px] rounded-xl object-cover border border-slate-200 shadow-sm">
                         <div>
                             <p class="text-sm font-semibold text-blue-800">Nova imagem selecionada</p>
                             <p class="text-xs text-blue-600 mt-0.5" id="nome_arquivo_selecionado"></p>

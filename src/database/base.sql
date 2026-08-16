@@ -81,3 +81,5 @@ CREATE TABLE `tb_noticia` (
 
 ALTER TABLE `tb_noticia` 
 ADD COLUMN `imagem` VARCHAR(255) DEFAULT NULL AFTER `descricao`;
+
+ALTER TABLE tb_noticia MODIFY descricao TEXT;
