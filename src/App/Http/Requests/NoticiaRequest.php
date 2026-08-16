@@ -29,6 +29,7 @@ class NoticiaRequest extends Request
             'titulo.max'      => 'O título não pode exceder 150 caracteres.',
             'descricao.max'   => 'A descrição não pode exceder 500 caracteres.',
             'imagem.fileType' => 'O arquivo não está no formato correto',
+            'status.required' => 'Informe o status',
         ];
     }
 }

@@ -37,16 +37,15 @@
 
                 <!-- Status Select  -->
 
-                <!-- <label for="status" class="text-sm font-medium text-slate-700">Status</label>
+                <label for="status" class="text-sm font-medium text-slate-700">Status</label>
                 <label for="status" class="text-sm font-medium text-slate-700">Status</label>
 
                 <select id="status" name="status" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100 disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-500">
 
+                    <option value="1">Ativo</option>
                     <option value="0">Inativo </option>
 
-                    <option value="1">Ativo</option>
-
-                </select> -->
+                </select>
                 
                 <!-- TODO: Estilizar melhor -->
                 <label class="block mb-2 text-sm font-medium text-slate-900" for="imagem">

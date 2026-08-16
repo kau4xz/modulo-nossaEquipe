@@ -57,7 +57,7 @@
                          class="h-64 w-full max-w-lg rounded-xl border border-slate-200 object-cover shadow-sm">
                 </div>
             <?php else : ?>
-                <div class="mx-auto flex h-32 w-full max-w-lg items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-slate-400">
+                <div class="mx-none flex h-[200px] w-[100%]  items-center justify-center rounded-xl border border-dashed border-slate-200 bg-slate-50 text-slate-400">
                     <div class="text-center">
                         <i class="fa-regular fa-image text-2xl mb-1"></i>
                         <p class="text-xs font-medium">Sem imagem</p>
