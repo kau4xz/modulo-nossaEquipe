@@ -12,21 +12,31 @@ document.addEventListener('DOMContentLoaded', function() {
     // 1. Ação do Botão "Excluir imagem" (Serve para a nova e para a antiga!)
     if (btnRemover) {
         btnRemover.addEventListener('click', function() {
-            if (inputRemover) inputRemover.value = "1"; // Avisa o BD para apagar
+            // Avisa o BD para apagar
+            if (inputRemover) inputRemover.value = "1"; 
             
-            // Esconde os dois cards de imagem
-            if (boxImagemAtual) boxImagemAtual.classList.add('hidden');
-            if (boxPreviewNovo) boxPreviewNovo.classList.add('hidden');
-            if (boxPreviewNovo) boxPreviewNovo.classList.remove('flex');
+            // Força a remoção do flex e aplica hidden na IMAGEM ANTIGA
+            if (boxImagemAtual) {
+                boxImagemAtual.classList.remove('flex');
+                boxImagemAtual.classList.add('hidden');
+            }
+            
+            // Força a remoção do flex e aplica hidden no PREVIEW NOVO
+            if (boxPreviewNovo) {
+                boxPreviewNovo.classList.remove('flex');
+                boxPreviewNovo.classList.add('hidden');
+            }
             
             // Limpa o arquivo recém escolhido (se houver)
             if (inputImagem) inputImagem.value = ""; 
-            if (preview) preview.src = "";
+            
+            // Esvazia o src para evitar ícone de imagem quebrada
+            if (preview) preview.src = ""; 
             
             // Reseta os textos e esconde o botão de remover
             if (labelTextoBtn) labelTextoBtn.textContent = 'Selecionar arquivo';
-            this.classList.add('hidden');
             this.classList.remove('inline-flex');
+            this.classList.add('hidden');
         });
     }
 
@@ -43,16 +53,21 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 leitor.readAsDataURL(arquivo);
 
-                // Mostra o card do preview e esconde o da foto antiga
-                if (boxImagemAtual) boxImagemAtual.classList.add('hidden');
+                // Esconde o card da foto antiga
+                if (boxImagemAtual) {
+                    boxImagemAtual.classList.remove('flex');
+                    boxImagemAtual.classList.add('hidden');
+                }
                 
+                // Mostra o card do preview novo adicionando o flex de volta
                 if (boxPreviewNovo) {
                     boxPreviewNovo.classList.remove('hidden');
                     boxPreviewNovo.classList.add('flex');
                 }
+                
                 if (nomeArquivoSelecionado) nomeArquivoSelecionado.textContent = arquivo.name;
 
-                // Garante que o PHP NÃO apague a foto antes da nova chegar
+                // Garante que o PHP NÃO apague a foto antiga antes da nova chegar
                 if (inputRemover) inputRemover.value = "0"; 
                 if (labelTextoBtn) labelTextoBtn.textContent = 'Trocar imagem';
 
@@ -64,15 +79,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
             } else {
                 // Se o usuário abrir a janela do PC mas clicar em "Cancelar", 
-                // o navegador esvazia a foto. Escondemos o preview novo.
+                // o navegador esvazia a foto. Escondemos o preview novo removendo o flex.
                 if (boxPreviewNovo) {
-                    boxPreviewNovo.classList.add('hidden');
                     boxPreviewNovo.classList.remove('flex');
+                    boxPreviewNovo.classList.add('hidden');
                 }
                 
-                // Se a pessoa NÃO clicou em remover a antiga antes, ela volta a aparecer.
+                // Se a pessoa NÃO clicou em remover a antiga antes, ela volta a aparecer (trazendo o flex).
                 if (inputRemover && inputRemover.value === "0" && boxImagemAtual) {
                     boxImagemAtual.classList.remove('hidden');
+                    boxImagemAtual.classList.add('flex');
                     if (labelTextoBtn) labelTextoBtn.textContent = 'Trocar imagem';
                 }
             }

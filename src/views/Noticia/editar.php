@@ -78,7 +78,7 @@ $userIsAtivo = $item->getStatus();
                     <?php endif; ?>
 
                     <!-- Container do preview da NOVA imagem (Oculto por padrão) -->
-                    <div class="hidden flex items-center gap-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4 transition-all" id="box_preview_novo">
+                    <div class="hidden items-center gap-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4 transition-all" id="box_preview_novo">
                         <img id="preview" src="" alt="Pré-visualização" class="h-[200px] w-[300px rounded-xl object-cover border border-slate-200 shadow-sm">
                         <div>
                             <p class="text-sm font-semibold text-blue-800">Nova imagem selecionada</p>

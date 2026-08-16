@@ -37,7 +37,7 @@ class NoticiaService implements INoticiaService
         return $this->repository->create($novo);
     }
 
-   public function update(string $id, array $data): Noticia
+  public function update(string $id, array $data): Noticia
 {
     $existente = $this->repository->getById($id);
 
@@ -46,12 +46,20 @@ class NoticiaService implements INoticiaService
     }
 
     $urlImagem = $existente->getImagem();
+    
+    if ($data['remover_imagem']) {
+        if ($urlImagem) {
+            FileService::delete($urlImagem);
+        }
+        $urlImagem = null;
+    }
+
+    // Se o usuário enviou uma imagem NOVA
     if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
-        
-        FileService::delete($urlImagem);
-        
+        if ($urlImagem) {
+            FileService::delete($urlImagem);
+        }
         $urlImagem = FileService::save($_FILES['imagem'], 'noticia');
-        
     }
 
     $atualizado = Noticia::fromArray([
@@ -66,7 +74,6 @@ class NoticiaService implements INoticiaService
 
     return $this->repository->update($atualizado);
 }
-
     public function delete(string $id): bool
     {
         $existente = $this->repository->getById($id);
