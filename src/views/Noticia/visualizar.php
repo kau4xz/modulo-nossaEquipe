@@ -51,7 +51,7 @@
 
             <!-- 2. Imagem (Menor e Centralizada) -->
             <?php if ($item->getImagem()) : ?>
-                <div class="flex justify-center">
+                <div class="flex justify-center pt-4">
                     <img src="public<?= htmlspecialchars($item->getImagem()) ?>" 
                          alt="<?= htmlspecialchars($item->getTitulo()) ?>" 
                          class="h-64 w-full max-w-lg rounded-xl border border-slate-200 object-cover shadow-sm">
@@ -66,7 +66,7 @@
             <?php endif; ?>
 
             <!-- 3. Descrição / Legenda -->
-            <div class="space-y-2 pt-2">
+            <div class="space-y-2 pt-4">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Conteúdo da Notícia</span>
                 <p class="text-base leading-relaxed text-slate-700 whitespace-pre-line">
                     <?= $item->getDescricao() 
