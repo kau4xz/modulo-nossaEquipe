@@ -77,11 +77,13 @@ class NoticiaService implements INoticiaService
     public function delete(string $id): bool
     {
         $existente = $this->repository->getById($id);
-
+        
         if ($existente === null) {
             throw NoticiaException::naoEncontrado();
         }
-
+        if($existente->getImagem() != null){
+            FileService::delete($existente->getImagem());
+        }
         return $this->repository->delete($id);
     }
 
