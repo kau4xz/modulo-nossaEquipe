@@ -44,7 +44,7 @@
                     </span>
                 </div>
                 
-                <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl">
+                <h2 class="text-2xl font-bold tracking-tight text-slate-900 sm:text-3xl break-all">
                     <?= htmlspecialchars($item->getTitulo()) ?>
                 </h2>
             </div>
@@ -68,7 +68,7 @@
             <!-- 3. Descrição / Legenda -->
             <div class="space-y-2 pt-4">
                 <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Conteúdo da Notícia</span>
-                <p class="text-base leading-relaxed text-slate-700 whitespace-pre-line">
+                <p class="text-base leading-relaxed text-slate-700 whitespace-pre-line break-all">
                     <?= $item->getDescricao() 
                         ? nl2br(htmlspecialchars($item->getDescricao())) 
                         : '<em class="text-slate-400">Nenhuma descrição foi informada para esta notícia.</em>' ?>

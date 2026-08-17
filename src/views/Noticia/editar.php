@@ -32,7 +32,7 @@ $userIsAtivo = $item->getStatus();
                     <input type="text" id="titulo" name="titulo" required minlength="3" maxlength="150"
                         value="<?= htmlspecialchars($item->getTitulo()) ?>"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
-                    <?= old_error('titulo') ?>
+                    <?= old('titulo') ?>
                 </div>
 
                 <!-- ------------------------------- -->
@@ -42,7 +42,7 @@ $userIsAtivo = $item->getStatus();
                     <label for="descricao" class="block text-sm font-medium text-slate-700">Descrição</label>
                     <textarea id="descricao" name="descricao" maxlength="3000" rows="3"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"><?= htmlspecialchars($item->getDescricao() ?? '') ?></textarea>
-                    <?= old_error('descricao') ?>
+                    <?= old('descricao') ?>
                 </div>
 
                 <!-- ------------------------------- -->
