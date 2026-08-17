@@ -56,8 +56,12 @@ $userIsAtivo = $item->getStatus();
                         <option value="1" <?= $userIsAtivo ? 'selected' : '' ?>>Ativo</option>
                     </select>
                 </div>
+                <?php $statusErr = old_error('status'); ?>
+                <?php if ($statusErr !== '') { ?>
+                    <p class="mt-2 text-sm font-medium text-rose-700" id="status-error"><?php echo htmlspecialchars($statusErr); ?></p>
+                <?php } ?>
 
-               <!-- ------------------------------- -->
+                <!-- ------------------------------- -->
                 <!-- Input file da imagem            -->
                 <!-- ------------------------------- -->
                 <div class="space-y-4">
@@ -89,18 +93,24 @@ $userIsAtivo = $item->getStatus();
                     <!-- Botões: Selecionar e Excluir -->
                     <div class="flex items-center gap-3">
                         <label for="imagem" class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
-                            <i class="fa-solid fa-upload"></i> 
+                            <i class="fa-solid fa-upload"></i>
                             <span id="label_texto_btn"><?= $item->getImagem() ? 'Trocar imagem' : 'Selecionar arquivo' ?></span>
                         </label>
-                        
+
                         <input id="imagem" type="file" accept="image/*" name="imagem" class="hidden">
-                        
+
                         <!-- O Botão global de remover -->
                         <button type="button" id="btn_remover_imagem" class="<?= $item->getImagem() ? 'inline-flex' : 'hidden' ?> items-center gap-1.5 rounded-xl px-3 py-2 text-sm font-medium text-rose-600 hover:bg-rose-50 hover:text-rose-700">
                             <i class="fa-solid fa-trash"></i> Excluir imagem
                         </button>
                     </div>
-
+                    <?php 
+                    $imagemErr = old_error('imagem'); 
+                    var_dump($imagemErr);
+                    die;?>
+                    <?php if ($imagemErr !== '') { ?>
+                        <p class="mt-2 text-sm font-medium text-rose-700" id="imagem-error"><?php echo htmlspecialchars($imagemErr); ?></p>
+                    <?php } ?>
                     <p class="mt-1 text-xs text-slate-500">PNG, JPG ou JPEG (Tamanho máximo 2 MB).</p>
                 </div>
             </div>
