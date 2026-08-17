@@ -63,16 +63,20 @@
                     <span class="block text-sm font-medium text-slate-700">Imagem da Capa</span>
 
                     <!-- Container do preview da NOVA imagem (Oculto por padrão) -->
-                    <div class="hidden items-center gap-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4 transition-all" id="box_preview_novo">
-                        <img id="preview" src="" alt="Pré-visualização" class="h-[200px] w-[300px] rounded-xl object-cover border border-slate-200 shadow-sm">
-                        <div>
+                    <!-- MODIFICADO: flex-col no mobile, sm:flex-row nas telas maiores, w-full -->
+                    <div class="hidden flex-col sm:flex-row items-center sm:items-start gap-4 rounded-xl border border-blue-100 bg-blue-50/50 p-4 transition-all w-full" id="box_preview_novo">
+                        <!-- MODIFICADO: w-full no mobile, sm:w-[300px] em telas maiores, shrink-0 para não amassar -->
+                        <img id="preview" src="" alt="Pré-visualização" class="h-[300px] w-full sm:w-[200px] shrink-0 rounded-xl object-cover border border-slate-200 shadow-sm">
+                        <div class="w-full text-center sm:text-left">
                             <p class="text-sm font-semibold text-blue-800">Nova imagem selecionada</p>
-                            <p class="text-xs text-blue-600 mt-0.5" id="nome_arquivo_selecionado"></p>
+                            <!-- MODIFICADO: break-all para o nome do arquivo não estourar a div -->
+                            <p class="text-xs text-blue-600 mt-0.5 break-all" id="nome_arquivo_selecionado"></p>
                         </div>
                     </div>
 
                     <!-- Botões: Selecionar e Excluir -->
-                    <div class="flex items-center gap-3">
+                    <!-- MODIFICADO: flex-wrap para evitar sobreposição em telas muito finas -->
+                    <div class="flex flex-wrap items-center gap-3">
                         <label for="imagem" class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                             <i class="fa-solid fa-upload"></i> 
                             <span id="label_texto_btn">Selecionar arquivo</span>
@@ -96,7 +100,7 @@
             <!-- ------------------------------- -->
             <!-- Botões finais  -->
             <!-- ------------------------------- -->
-            <div class="mt-6 flex justify-end gap-3">
+            <div class="mt-6 flex flex-wrap justify-end gap-3">
                 <a href="<?= $voltarUrl ?>"
                     class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
                     Cancelar
