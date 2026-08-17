@@ -51,6 +51,10 @@
                         <option value="0">Inativo</option>
                     </select>
                 </div>
+                 <?php $statusErr = old_error('status'); ?>
+                    <?php if ($statusErr !== '') { ?>
+                        <p class="mt-2 text-sm font-medium text-rose-700" id="status-error"><?php echo htmlspecialchars($statusErr); ?></p>
+                    <?php } ?>
                 
                 <!-- ------------------------------- -->
                 <!-- Input file da imagem            -->
@@ -81,7 +85,10 @@
                             <i class="fa-solid fa-trash"></i> Excluir imagem
                         </button>
                     </div>
-
+                     <?php $imagemErr = old_error('imagem'); ?>
+                    <?php if ($imagemErr !== '') { ?>
+                        <p class="mt-2 text-sm font-medium text-rose-700" id="imagem-error"><?php echo htmlspecialchars($imagemErr); ?></p>
+                    <?php } ?>
                     <p class="mt-1 text-xs text-slate-500">PNG, JPG ou JPEG (Tamanho máximo 2 MB).</p>
                 </div>
             </div>

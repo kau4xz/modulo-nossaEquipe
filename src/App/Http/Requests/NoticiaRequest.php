@@ -15,7 +15,7 @@ class NoticiaRequest extends Request
             'id'        => ['nullable', 'string'],
             'titulo'    => ['required', 'string', 'min:3', 'max:150'],
             'descricao' => ['nullable', 'string', 'max:3000'],
-            'imagem'    => ['nullable', 'fileType:jpg,jpeg,png,webp', 'fileSize:2048'],
+            'imagem'    => ['nullable', 'fileSize:2048', 'fileType:jpg,jpeg,png,webp',],
             'status'    => ['required', 'boolean'],
         ];
     }
@@ -28,10 +28,10 @@ class NoticiaRequest extends Request
             'titulo.min'      => 'O título deve ter pelo menos 3 caracteres.',
             'titulo.max'      => 'O título não pode exceder 150 caracteres.',
             'descricao.max'   => 'A descrição não pode exceder 3000 caracteres.',
-            'imagem.fileType' => 'O arquivo não está no formato correto',
             'imagem.fileSize' => 'O tamanho máximo do arquivo é 2 MB',
-            'imagem'          => 'Erro. Verifique o tamanho e o tipo da imagem',
+            'imagem.fileType' => 'O arquivo deve ser uma imagem de extensão: jpg, jpeg, png ou webp.',
             'status.required' => 'Informe o status',
+            'status.boolean'  => 'O status deve ser 0 ou 1.'
         ];
     }
 }
