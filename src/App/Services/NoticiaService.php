@@ -19,9 +19,8 @@ class NoticiaService implements INoticiaService
     public function create(array $data): Noticia
     {
         $agora = date('Y-m-d H:i:s');
-        $tamanho = $_FILES['imagem']['size'];
-        // Uma forma de verificar se a imagem existe, deve haver melhores
-        if ($tamanho !== 0) {
+
+        if (isset($_FILES['imagem']) && $_FILES['imagem']['error'] === UPLOAD_ERR_OK) {
             $url = FileService::save($_FILES['imagem'], 'noticia');
         }
 
