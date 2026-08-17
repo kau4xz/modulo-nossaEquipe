@@ -24,7 +24,7 @@ class GaleriaRepository implements IGaleriaRepository
         $sql = 'INSERT INTO tb_galeria (id, titulo, legenda, status, created_at, updated_at, tipo, caminho)
                 VALUES (:id, :titulo, :legenda, :status, :created_at, :updated_at, :tipo, :caminho)';
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':id', $galeria->getId(), PDO::PARAM_STR);
+        $stmt->bindValue(':id', $galeria->getId());
         $stmt->bindValue(':titulo', $galeria->getTitulo());
         $stmt->bindValue(':legenda', $galeria->getLegenda());
         $stmt->bindValue(':status', $galeria->getStatus(), PDO::PARAM_BOOL);
@@ -41,7 +41,7 @@ class GaleriaRepository implements IGaleriaRepository
     {
         $sql = 'UPDATE tb_galeria
                 SET titulo = :titulo, legenda = :legenda,
-                    status = :status, updated_at = :updated_at, tipo = :tipo
+                    status = :status, updated_at = :updated_at, tipo = :tipo, caminho = :caminho
                 WHERE id = :id';
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':titulo', $galeria->getTitulo());
@@ -50,6 +50,7 @@ class GaleriaRepository implements IGaleriaRepository
         $stmt->bindValue(':updated_at', $galeria->getUpdatedAt());
         $stmt->bindValue(':id', $galeria->getId(), PDO::PARAM_STR);
         $stmt->bindValue(':tipo', $galeria->getTipo());
+        $stmt->bindValue(':caminho', $galeria->getCaminho());
         $stmt->execute();
 
         return $galeria;
@@ -57,7 +58,7 @@ class GaleriaRepository implements IGaleriaRepository
 
     public function getAll(): array
     {
-        $sql = 'SELECT id, titulo, legenda, status, tipo, caminho FROM tb_galeria ORDER BY id DESC';
+        $sql = 'SELECT * FROM tb_galeria ORDER BY id DESC';
         $stmt = $this->conn->query($sql);
         $itens = [];
 
@@ -66,11 +67,11 @@ class GaleriaRepository implements IGaleriaRepository
                 $row['titulo'],
                 $row['legenda'],
                 (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id'],   
                 $row['tipo'],
-                $row['caminho'],
-                null,
-                null,
-                $row['id']
+                $row['caminho']
             );
         }
 

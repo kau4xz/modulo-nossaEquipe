@@ -61,7 +61,6 @@ class GaleriaController extends SharedController
     public function editar(): string
     {
         $id = trim((string) filter_input(INPUT_GET, 'id'));
-
         if ($id === '') {
             Toast::error('ID inválido.');
             Url::redirect('/galeria');

@@ -47,9 +47,8 @@
                 </div>
 
                 <div>
-                    <label for="iamgem" class="block text-sm font-medium text-slate-700">Enviar Imagem</label>
+                    <label for="imagem" class="block text-sm font-medium text-slate-700">Enviar Imagem</label>
                     <input type="file" id='imagem' name='imagem' accept="image/jpeg, image/png" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
-                    
                 </div>
             </div>
 

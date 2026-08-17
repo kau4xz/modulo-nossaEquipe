@@ -17,7 +17,7 @@
     </div>
 
     <div class="rounded-2xl border border-slate-200 bg-white p-6">
-        <form method="POST" action="<?= $urlSalvar ?>">
+        <form method="POST" action="<?= $urlSalvar ?>" enctype="multipart/form-data">
             <?= csrf() ?>
             <input type="hidden" name="id" value="<?= htmlspecialchars($item->getId()) ?>">
 
@@ -45,6 +45,11 @@
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"
                     ><?= old('tipo', htmlspecialchars($item->getTipo() ?? '')) ?></textarea>
                     <?= old_error('tipo') ?>
+                </div>
+
+                <div>
+                    <label for="imagem" class="block text-sm font-medium text-slate-700">Enviar Imagem</label>
+                    <input type="file" id='imagem' name='imagem' accept="image/jpeg, image/png" class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
                 </div>
             </div>
 

@@ -46,7 +46,7 @@ class Galeria
             $data['status'] ?? null,
             $data['created_at'] ?? null,
             $data['updated_at'] ?? null,
-            $data['id'] ?? null,
+            $data['id'] ?? Uuid::uuid7()->toString(),
             $data['tipo'] ?? null,
             $data['caminho'] ?? null
         );
