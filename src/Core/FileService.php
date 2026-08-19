@@ -85,7 +85,13 @@ class FileService
     ): string {
         self::checkInit();
 
+         if (!isset($file['error']) || $file['error'] === UPLOAD_ERR_NO_FILE) {
+            return $oldFileUrl ?? ''; 
+        }
+        
         $newUrl = self::save($file, $folder);
+
+       
 
         if ($oldFileUrl && $oldFileUrl !== $newUrl) {
             self::delete($oldFileUrl);
