@@ -29,7 +29,7 @@ class EditIntegranteFormRequest extends Request
 
             'cargo.required' => 'O campo cargo é obrigatório.',
             'cargo.string' => 'O campo cargo deve ser uma string.',
-            'cargo.max' => 'O campo cargo deve ter no máximo 150 caracteres.',  
+            'cargo.max' => 'O campo cargo deve ter no máximo 150 caracteres.',
 
             'foto.fileType' => 'A extensão da foto não foi aceita Extensões aceitas: jpg, png e jpeg.',
             'foto.fileSize' => 'Tamanho máximo de 16MB excedido',

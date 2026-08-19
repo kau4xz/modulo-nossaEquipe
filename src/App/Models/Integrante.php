@@ -45,7 +45,6 @@ class Integrante
             $data['updated_at'] ?? null,
             $data['id'] ?? null,
             $data['foto'] ?? null
-            
         );
     }
 
@@ -109,12 +108,13 @@ class Integrante
         $this->updated_at = $updated_at;
     }
 
-    public function getFoto(): ?string 
+    public function getFoto(): ?string
     {
         return $this->foto;
     }
 
-    public function setFoto(?string $foto){
+    public function setFoto(?string $foto)
+    {
         $this->foto = $foto;
     }
 }

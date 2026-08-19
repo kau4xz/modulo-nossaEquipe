@@ -14,7 +14,8 @@ class IntegranteService implements IIntegranteService
 {
     public function __construct(
         private IIntegranteRepository $repository
-    ) {}
+    ) {
+    }
 
     public function create(array $data): Integrante
     {
@@ -27,7 +28,7 @@ class IntegranteService implements IIntegranteService
             'created_at' => $agora,
             'updated_at' => $agora,
             'foto' => $data['foto'] ?? null,
-           
+
         ]);
 
         return $this->repository->create($novo);
@@ -49,7 +50,7 @@ class IntegranteService implements IIntegranteService
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
             'foto' =>  FileService::update($data['foto'], 'integrantes', $existente->getFoto()) ?? $existente->getFoto()
-            
+
         ]);
 
         return $this->repository->update($atualizado);
@@ -59,14 +60,14 @@ class IntegranteService implements IIntegranteService
     {
         $existente = $this->repository->getById($id);
 
-       if ($existente === null) {
+        if ($existente === null) {
             throw NossaEquipeException::naoEncontrado();
         }
 
-         if($existente->getFoto() != null){
-          FileService::delete($existente->getFoto());
-         }
-       
+        if ($existente->getFoto() != null) {
+            FileService::delete($existente->getFoto());
+        }
+
         return $this->repository->delete($id);
     }
 

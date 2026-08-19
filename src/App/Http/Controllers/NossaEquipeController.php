@@ -102,13 +102,14 @@ class NossaEquipeController extends SharedController
             $request = (new CriarIntegranteFormRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
 
-            if(is_array($validated['foto'])){
-                $validated['foto'] = FileService::save($validated['foto'], 'integrantes');;
+            if (is_array($validated['foto'])) {
+                $validated['foto'] = FileService::save($validated['foto'], 'integrantes');
+                ;
             }
-           
+
             $this->integranteService->create($validated);
 
-        
+
             Toast::success('Registro criado com sucesso!');
             Url::redirect('/nossa-equipe');
         } catch (NossaEquipeException $e) {
@@ -120,11 +121,11 @@ class NossaEquipeController extends SharedController
 
     public function atualizar(): void
     {
-     
+
         try {
             $request = (new EditIntegranteFormRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
-        
+
             $this->integranteService->update((string) $validated['id'], $validated);
             Toast::success('Registro atualizado com sucesso!');
             Url::redirect('/nossa-equipe');
@@ -154,11 +155,12 @@ class NossaEquipeController extends SharedController
             Url::redirect('/nossa-equipe');
         }
     }
-    public function visualizar(){
-        
+    public function visualizar()
+    {
+
         $id = trim((string) filter_input(INPUT_GET, 'id'));
-        
-       
+
+
 
         try {
             $toast = Toast::pull();
@@ -173,13 +175,11 @@ class NossaEquipeController extends SharedController
             return self::getPage('Integrante - ' . "CARD", $content, [
             'showSidebar' => true,
             'activePage' => 'nossa-equipe',
-        ], $toast);
+            ], $toast);
         } catch (NossaEquipeException $e) {
             Toast::error($e->getMessage());
             Logger::error($e->getMessage());
             Url::redirect('/nossa-equipe');
-        }     
+        }
     }
-
-    
 }
