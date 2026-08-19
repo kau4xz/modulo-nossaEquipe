@@ -1,6 +1,6 @@
 <?php 
 
-namespace Src\App\Exceptions\NossaEquipe;
+namespace Src\App\Http\Exceptions\NossaEquipe;
 
 use Src\App\Http\Exceptions\DomainException;
 
