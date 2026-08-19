@@ -23,7 +23,7 @@ class Integrante
         ?bool $status = null,
         ?string $created_at = null,
         ?string $updated_at = null,
-        ?int $id = null,
+        ?string $id = null,
         ?string $foto = null
     ) {
         $this->setId($id);
@@ -49,12 +49,12 @@ class Integrante
         );
     }
 
-    public function getId(): ?int
+    public function getId(): ?string
     {
         return $this->id;
     }
 
-    public function setId(?int $id): void
+    public function setId(?string $id): void
     {
         $this->id = $id ?? Uuid::uuid7()->toString();
     }
