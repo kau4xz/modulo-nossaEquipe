@@ -32,3 +32,6 @@ desktop.ini
 *.tmp
 *.bak
 Limiting/appLimiting.txt
+
+# Uploads de arquivos enviados pelos usuarios
+/public/uploads/
