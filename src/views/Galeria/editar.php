@@ -25,27 +25,32 @@
                 <div>
                     <label for="titulo" class="block text-sm font-medium text-slate-700">Título <span class="text-rose-600">*</span></label>
                     <input type="text" id="titulo" name="titulo" required minlength="3" maxlength="150"
-                        value="<?= old('titulo', htmlspecialchars($item->getTitulo())) ?>"
+                        value="<?= htmlspecialchars($item->getTitulo()) ?>"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
                     <?= old_error('titulo') ?>
+                </div>
+
+                <div>
+                    <label for="tipo" class="block text-sm font-medium text-slate-700">Tipo</label>
+                    <select id="tipo" name="tipo" maxlength="500" rows="3"
+                        class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"
+                    ><?= old('tipo') ?>
+                    <option value="Esporte" <?= $item->getTipo() === "Esporte"?"selected" : "" ?>>Esporte</option>
+                    <option value="Natureza"<?= $item->getTipo() === "Natureza"?"selected" : "" ?>>Natureza</option>
+                    <option value="Automotivo"<?= $item->getTipo() === "Automotivo"?"selected" : "" ?>>Automotivo</option>
+                    <option value="Tecnologia"<?= $item->getTipo() === "Tecnologia"?"selected" : "" ?>>Tecnologia</option>
+                    </select>
+                    <?= old_error('tipo') ?>
                 </div>
 
                 <div>
                     <label for="legenda" class="block text-sm font-medium text-slate-700">Legenda</label>
                     <textarea id="legenda" name="legenda" maxlength="500" rows="3"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"
-                    ><?= old('legenda', htmlspecialchars($item->getLegenda() ?? '')) ?></textarea>
+                    ><?= htmlspecialchars($item->getLegenda() ?? '') ?></textarea>
                     <?= old_error('legenda') ?>
                 </div>
             </div>
-
-                <div>
-                    <label for="tipo" class="block text-sm font-medium text-slate-700">Tipo</label>
-                    <textarea id="tipo" name="tipo" maxlength="500" rows="3"
-                        class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"
-                    ><?= old('tipo', htmlspecialchars($item->getTipo() ?? '')) ?></textarea>
-                    <?= old_error('tipo') ?>
-                </div>
 
                 <div>
                     <label for="imagem" class="block text-sm font-medium text-slate-700">Enviar Imagem</label>

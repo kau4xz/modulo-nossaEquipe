@@ -30,6 +30,7 @@ class GaleriaController extends SharedController
                 'urlCriar'   => Url::path('/galeria/criar'),
                 'editarUrl'  => Url::path('/galeria/editar'),
                 'deletarUrl' => Url::path('/galeria/deletar'),
+                'visualizar' => Url::path('/galeria/visualizar')
             ]);
 
             return self::getPage('GALERIA - LISTAGEM', $content, [

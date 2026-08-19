@@ -30,9 +30,14 @@
 
                 <div>
                     <label for="tipo" class="block text-sm font-medium text-slate-700">Tipo</label>
-                    <textarea id="tipo" name="tipo" maxlength="500" rows="3"
+                    <select id="tipo" name="tipo" maxlength="500" rows="3"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"
-                    ><?= old('tipo') ?></textarea>
+                    ><?= old('tipo') ?>
+                    <option value="Esporte">Esporte</option>
+                    <option value="Natureza">Natureza</option>
+                    <option value="Automotivo">Automotivo</option>
+                    <option value="Tecnologia">Tecnologia</option>
+                    </select>
                     <?= old_error('tipo') ?>
                 </div>
             

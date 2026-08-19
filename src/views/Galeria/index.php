@@ -5,6 +5,7 @@
  * @var string $urlCriar
  * @var string $editarUrl
  * @var string $deletarUrl
+ * @var string $visualizarUrl
  */
 
 ?>

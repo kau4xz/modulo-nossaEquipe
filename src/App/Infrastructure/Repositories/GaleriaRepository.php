@@ -91,11 +91,12 @@ class GaleriaRepository implements IGaleriaRepository
                 $row['titulo'],
                 $row['legenda'],
                 (bool) $row['status'],
-                $row['tipo'],
                 $row['created_at'],
                 $row['updated_at'],
-                $row['caminho'],
-                $row['id']
+                $row['id'],
+                $row['tipo'],
+                $row['caminho']
+                
             );
         }
 
