@@ -17,6 +17,7 @@ class NoticiaRequest extends Request
             'descricao' => ['nullable', 'string', 'max:3000'],
             'imagem'    => ['nullable', 'fileSize:2048', 'fileType:jpg,jpeg,png,webp',],
             'status'    => ['required', 'boolean'],
+            'remover_imagem'   => ['nullable', 'boolean']
         ];
     }
 
