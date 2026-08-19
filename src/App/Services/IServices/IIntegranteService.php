@@ -9,9 +9,9 @@ use Src\App\Models\Integrante;
 interface IIntegranteService
 {
     public function create(array $data): Integrante;
-    public function update(int $id, array $data): Integrante;
-    public function delete(int $id): bool;
+    public function update(string $id, array $data): Integrante;
+    public function delete(string $id): bool;
     public function getAll(): array;
-    public function getById(int $id): ?Integrante;
+    public function getById(string $id): ?Integrante;
     public function count(): int;
 }
