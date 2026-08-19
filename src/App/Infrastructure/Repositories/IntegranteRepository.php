@@ -56,7 +56,7 @@ class IntegranteRepository implements IIntegranteRepository
 
     public function getAll(): array
     {
-        $sql = 'SELECT id, nome, cargo, foto, status FROM tb_integrante ORDER BY id DESC';
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY id DESC';
         $stmt = $this->conn->query($sql);
         $itens = [];
 
@@ -65,8 +65,8 @@ class IntegranteRepository implements IIntegranteRepository
                 $row['nome'],
                 $row['cargo'],
                 (bool) $row['status'],
-                null,
-                null,
+                $row['created_at'],
+                $row['updated_at'],
                 $row['id'],
                 $row['foto'],
             );
@@ -75,7 +75,7 @@ class IntegranteRepository implements IIntegranteRepository
         return $itens;
     }
 
-    public function getById(int $id): ?Integrante
+    public function getById(string $id): ?Integrante
     {
         $sql = 'SELECT * FROM tb_integrante WHERE id = :id';
         $stmt = $this->conn->prepare($sql);
@@ -98,7 +98,7 @@ class IntegranteRepository implements IIntegranteRepository
         return null;
     }
 
-    public function delete(int $id): bool
+    public function delete(string $id): bool
     {
         $sql = 'DELETE FROM tb_integrante WHERE id = :id';
         $stmt = $this->conn->prepare($sql);
@@ -108,7 +108,7 @@ class IntegranteRepository implements IIntegranteRepository
 
     public function count(): int
     {
-        $stmt = $this->conn->query('SELECT COUNT(*) FROM tb_exemplo');
+        $stmt = $this->conn->query('SELECT COUNT(*) FROM tb_integrante');
         return (int) $stmt->fetchColumn();
     }
 }
