@@ -57,16 +57,18 @@ class SharedController
     {
         $isAdmin = $_SESSION['usuario_role'] === Perfil::ADMIN->value;
         return View::render('Shared/sidebar', [
-            'isAdmin'          => $isAdmin,
-            'activeDashboard'  => $activePage === 'dashboard',
-            'activeAdmin'      => $activePage === 'admin',
-            'activeExemplo'    => $activePage === 'exemplo',
-            'activeConfig'     => $activePage === 'configuracoes',
-            'urlDashboard'     => Url::path('/home'),
-            'urlExemplo'       => Url::path('/exemplo'),
-            'urlAdmin'         => Url::path('/admin'),
-            'urlConfig'        => Url::path('/configuracoes'),
-            'urlLogout'        => Url::path('/logout'),
+            'isAdmin'           => $isAdmin,
+            'activeDashboard'   => $activePage === 'dashboard',
+            'activeAdmin'       => $activePage === 'admin',
+            'activeNossaEquipe' => $activePage === 'nossa-equipe',
+            'activeExemplo'     => $activePage === 'exemplo',
+            'activeConfig'      => $activePage === 'configuracoes',
+            'urlDashboard'      => Url::path('/home'),
+            'urlExemplo'        => Url::path('/exemplo'),
+            'urlNossaEquipe'    => Url::path('/nossa-equipe'),
+            'urlAdmin'          => Url::path('/admin'),
+            'urlConfig'         => Url::path('/configuracoes'),
+            'urlLogout'         => Url::path('/logout'),
         ]);
     }
 }
