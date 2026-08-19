@@ -8,8 +8,8 @@ use Src\App\Models\Integrante;
 interface IIntegranteRepository {
     public function create(Integrante $integrante): Integrante;
     public function update(Integrante $integrante): Integrante;
-    public function delete(int $id): bool;
+    public function delete(string $id): bool;
     public function getAll(): array;
-    public function getById(int $id): ?Integrante;  
+    public function getById(string $id): ?Integrante;  
     public function count(): int;
 }
