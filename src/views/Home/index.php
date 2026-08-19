@@ -17,16 +17,17 @@ use Src\App\Utils\Url;
         <div class="rounded-2xl border border-slate-200 bg-white p-5">
             <div class="flex items-start justify-between gap-3">
                 <div>
-                    <p class="text-sm font-medium text-slate-600">Exemplo</p>
-                    <p class="mt-2 text-2xl font-semibold text-slate-900">{{countExemplo}}</p>
+                    <p class="text-sm font-medium text-slate-600">Nossa Equipe</p>
+                    <p class="mt-2 text-2xl font-semibold text-slate-900">{{countIntegrante}}</p>
                     <p class="mt-1 text-xs text-slate-500">Registros cadastrados</p>
                 </div>
                 <div class="inline-flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
-                    <i class="fa-solid fa-layer-group"></i>
+                    <i class="fa-solid fa-users-rectangle"></i>
                 </div>
             </div>
         </div>
     </div>
+
 
     <div class="rounded-2xl border border-slate-200 bg-white">
         <div class="flex items-center justify-between gap-3 px-5 py-4">
