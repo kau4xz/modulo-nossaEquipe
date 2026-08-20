@@ -35,6 +35,6 @@ class GaleriaExecptions extends DomainException
 
     public static function tamanhoMax(): self
     {
-        return new self('Tamanho máximo 80 MB');
+        return new self('Tamanho máximo 10 MB');
     }
 }

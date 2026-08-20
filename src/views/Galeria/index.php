@@ -1,7 +1,7 @@
 <?php
 
 /**
- * @var array  $itens
+ * @var array  $item
  * @var string $urlCriar
  * @var string $editarUrl
  * @var string $deletarUrl
@@ -57,6 +57,12 @@
                     </td>
                     <td class="px-5 py-3 text-right">
                         <div class="flex items-center justify-end gap-2">
+                            <a href="<?= $visualizarUrl . '?id=' . $item->getId() ?>"
+                                class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-blue-700 hover:bg-blue-50 transition-colors"
+                                title="Ver detalhes da imagem">
+                                <i class="fa-solid fa-eye"></i> Ver
+                            </a>
+                    
                             <a href="<?= $editarUrl . '?id=' . $item->getId() ?>"
                                 class="inline-flex items-center gap-1 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-semibold text-slate-700 hover:bg-slate-50">
                                 <i class="fa-solid fa-pen"></i> Editar

@@ -28,6 +28,8 @@ class GaleriaRequest extends Request
             'titulo.min'      => 'O título deve ter pelo menos 3 caracteres.',
             'titulo.max'      => 'O título não pode exceder 150 caracteres.',
             'legenda.max'   => 'A descrição não pode exceder 500 caracteres.',
+            'caminho.fileType'   => 'Tipo de arquivo inválido.',
+            'caminho.fileSize'   => 'O arquivo execede 10 MB.'
         ];
     }
 }

@@ -30,7 +30,7 @@ class GaleriaController extends SharedController
                 'urlCriar'   => Url::path('/galeria/criar'),
                 'editarUrl'  => Url::path('/galeria/editar'),
                 'deletarUrl' => Url::path('/galeria/deletar'),
-                'visualizar' => Url::path('/galeria/visualizar')
+                'visualizarUrl' => Url::path('/galeria/visualizar')
             ]);
 
             return self::getPage('GALERIA - LISTAGEM', $content, [
@@ -143,5 +143,40 @@ class GaleriaController extends SharedController
             Logger::error($e->getMessage());
             Url::redirect('/galeria');
         }
+    }
+
+    public function visualizar()
+    {
+        $id = trim((string) filter_input(INPUT_GET, 'id'));
+        if ($id === '') {
+            Toast::error('ID inválido.');
+            Url::redirect('/galeria');
+        }
+
+        try{
+            $itens = $this->galeriaService->getById($id);
+            if ($itens === null) {
+                Toast::error('Registro não encontrado.');
+                Url::redirect('/galeria');
+            }
+            $content = View::render('galeria/visualizar',[
+                'itens' => $itens,
+                'voltarUrl' => Url::path('/galeria'),
+                'UrlSalvar' => Url::path('/galeria/visualizar')
+            ]);
+
+            return self::getPage('GALERIA - LISTAGEM', $content,[
+                'showSidebar' => true,
+                'bodyClass'   => 'galeria-page',
+                'activePage'  => 'galeria',
+            ]);
+
+        } catch(GaleriaExecptions $e){
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/home');
+        }
+
+
     }
 }
