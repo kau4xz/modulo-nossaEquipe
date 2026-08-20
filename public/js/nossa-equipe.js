@@ -33,3 +33,4 @@ searchInput?.addEventListener('input', filtrar);
 filterStatus?.addEventListener('change', filtrar);
 
 filtrar();
+

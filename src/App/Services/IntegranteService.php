@@ -41,6 +41,11 @@ class IntegranteService implements IIntegranteService
         if ($existente === null) {
             throw NossaEquipeException::naoEncontrado();
         }
+        $urlFoto = $existente->getFoto();
+
+        if(is_array($data['foto'])){
+            $urlFoto = FileService::update($data['foto'], 'integrantes', $existente->getFoto());
+        }
 
         $atualizado = Integrante::fromArray([
             'id' => $id,
@@ -49,8 +54,7 @@ class IntegranteService implements IIntegranteService
             'status' => (bool) $data['status'],
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
-            'foto' =>  FileService::update($data['foto'], 'integrantes', $existente->getFoto()) ?? $existente->getFoto()
-
+           'foto' => $urlFoto,
         ]);
 
         return $this->repository->update($atualizado);

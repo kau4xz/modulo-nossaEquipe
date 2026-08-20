@@ -44,18 +44,22 @@ use Src\App\Utils\Url;
                 <select id="filterStatus"
                     class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
                     <option value="">Todos os status</option>
-                    <option value="1">Ativo</option>
-                    <option value="0">Inativo</option>
+                    <option value="1">Publicado</option>
+                    <option value="0">Não Publicado</option>
                 </select>
             </div>
 
              <div>
-                <label for="filterStatus" class="text-sm font-medium text-slate-700">Ordernar por</label>
-                <select id="filterStatus"
+                <label for="orderBy" class="text-sm font-medium text-slate-700">Ordernar por</label>
+                <select id="orderBy"
                     class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
-                    <option value="">Todos os status</option>
-                    <option value="1">Ativo</option>
-                    <option value="0">Inativo</option>
+                    <option value="az">Nome AZ</option>
+                    <option value="za">Nome ZA</option>
+                    <option value="created_old">Criado: mais antigo</option>
+                    <option value="created_recent">Criado: mais recente</option>
+                    <option value="updated_old">Atualizado: mais antigo</option>
+                    <option value="updated_recent">Atualizado: mais recente</option>
+
                 </select>
             </div>
         </div>
@@ -66,16 +70,22 @@ use Src\App\Utils\Url;
     <div class="rounded-2xl border border-slate-200 bg-white">
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-slate-200">
+                <!-- CABEÇALHO -->
                 <thead class="bg-slate-50">
                     <tr>
                         <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Foto</th>
                         <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Nome</th>
                         <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Cargo</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Cadastrado em:</th>
+                        <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Atualizado em:</th>
                         <th class="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wider text-slate-600">Status</th>
                         <th class="px-5 py-3 text-right text-xs font-semibold uppercase tracking-wider text-slate-600">Ações</th>
                     </tr>
                 </thead>
+
+               <!-- CORPO -->
                 <tbody id="integranteTableBody" class="divide-y divide-slate-200 bg-white">
+                    <!-- CORPO SEM REGISTRO -->
                     <?php if (empty($itens)) : ?>
                         <tr>
                             <td colspan="5" class="px-5 py-10 text-center text-sm text-slate-600">
@@ -88,10 +98,14 @@ use Src\App\Utils\Url;
                                 Nenhum integrante encontrado para esse filtro.
                             </td>
                         </tr>
+
+                        <!-- CORPO COM REGISTRO -->
                         <?php foreach ($itens as $item) : ?>
                             <tr class="hover:bg-slate-50"
                                 data-nome="<?= strtolower(htmlspecialchars($item->getNome())) ?>"
                                 data-cargo="<?= strtolower(htmlspecialchars($item->getCargo() ?? '')) ?>"
+                                data-criado="<?= strtolower(htmlspecialchars($item->getCreatedAt())) ?>"
+                                data-criado="<?= strtolower(htmlspecialchars($item->getUpdatedAt())) ?>"
                                 data-status="<?= $item->getStatus() ? '1' : '0' ?>">
                                 <td class="px-5 py-4">
                                     <?php if ($item->getFoto()) : ?>
@@ -106,6 +120,8 @@ use Src\App\Utils\Url;
                                 </td>
                                 <td class="px-5 py-4 text-sm font-semibold text-slate-900"><?= htmlspecialchars($item->getNome()) ?></td>
                                 <td class="px-5 py-4 text-sm text-slate-600"><?= htmlspecialchars($item->getCargo() ?? '—') ?></td>
+                                <td class="px-5 py-4 text-sm font-semibold text-slate-900"><?= htmlspecialchars($item->getCreatedAt()) ?></td>
+                                <td class="px-5 py-4 text-sm text-slate-900"><?= htmlspecialchars($item->getUpdatedAt() ??'_') ?></td>
                                 <td class="px-5 py-4">
                                     <?php if ($item->getStatus()) : ?>
                                         <span class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">
@@ -119,6 +135,7 @@ use Src\App\Utils\Url;
                                         </span>
                                     <?php endif; ?>
                                 </td>
+
                                 <td class="px-5 py-4 text-right">
                                     <div class="inline-flex items-center gap-2">
                                         <a href="<?= $editarUrl . '?id=' . $item->getId() ?>"

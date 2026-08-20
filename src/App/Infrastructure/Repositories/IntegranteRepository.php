@@ -56,7 +56,7 @@ class IntegranteRepository implements IIntegranteRepository
 
     public function getAll(): array
     {
-        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY id DESC';
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY nome DESC';
         $stmt = $this->conn->query($sql);
         $itens = [];
 
@@ -111,4 +111,125 @@ class IntegranteRepository implements IIntegranteRepository
         $stmt = $this->conn->query('SELECT COUNT(*) FROM tb_integrante');
         return (int) $stmt->fetchColumn();
     }
+
+    public function byNameAsc(string $nome): array{
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY id';
+        $stmt = $this->conn->query($sql);
+        $itens = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $itens[] = new Integrante(
+                $row['nome'],
+                $row['cargo'],
+                (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id'],
+                $row['foto'],
+            );
+        }
+
+        return $itens;
+    }
+    public function byNameDesc(string $nome): array
+    {
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY id DESC';
+        $stmt = $this->conn->query($sql);
+        $itens = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $itens[] = new Integrante(
+                $row['nome'],
+                $row['cargo'],
+                (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id'],
+                $row['foto'],
+            );
+        }
+
+        return $itens;
+    }
+    public function byCreatedAsc(string $nome): array
+    {
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY created_at';
+        $stmt = $this->conn->query($sql);
+        $itens = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $itens[] = new Integrante(
+                $row['nome'],
+                $row['cargo'],
+                (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id'],
+                $row['foto'],
+            );
+        }
+
+        return $itens;
+    }
+    public function byCreatedDesc(string $nome): array
+    {
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY created_at DESC';
+        $stmt = $this->conn->query($sql);
+        $itens = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $itens[] = new Integrante(
+                $row['nome'],
+                $row['cargo'],
+                (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id'],
+                $row['foto'],
+            );
+        }
+
+        return $itens;
+    }
+    public function byUpdatedAsc(string $nome): array
+    {
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY updated_at';
+        $stmt = $this->conn->query($sql);
+        $itens = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $itens[] = new Integrante(
+                $row['nome'],
+                $row['cargo'],
+                (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id'],
+                $row['foto'],
+            );
+        }
+
+        return $itens;
+    }
+    public function byUpdatedDesc(string $nome): array
+    {
+        $sql = 'SELECT id, nome, cargo, foto, created_at, updated_at, status FROM tb_integrante ORDER BY updated_at desc';
+        $stmt = $this->conn->query($sql);
+        $itens = [];
+
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            $itens[] = new Integrante(
+                $row['nome'],
+                $row['cargo'],
+                (bool) $row['status'],
+                $row['created_at'],
+                $row['updated_at'],
+                $row['id'],
+                $row['foto'],
+            );
+        }
+
+        return $itens;
+    }
+    
 }

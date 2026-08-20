@@ -10,6 +10,7 @@ enum Status: int
 {
     case ATIVO = 1;
     case INATIVO = 0;
+    
 
     public function toText(): string
     {
