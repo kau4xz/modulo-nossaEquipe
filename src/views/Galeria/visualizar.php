@@ -20,12 +20,11 @@
             <h1 class="mt-2 text-2xl font-semibold text-slate-900">Visualizar Imagem</h1>
         </div>
 
-        <?php if (isset($editarUrl)) : ?>
             <a href="<?= $editarUrl . '?id=' . $itens->getId() ?>"
                 class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800 transition-colors">
                 <i class="fa-solid fa-pen"></i> Editar imagem
             </a>
-        <?php endif; ?>
+
     </div>
 
     <!-- Card Principal -->

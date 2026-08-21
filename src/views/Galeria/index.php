@@ -6,6 +6,7 @@
  * @var string $editarUrl
  * @var string $deletarUrl
  * @var string $visualizarUrl
+ * @var string $vitrineUrl
  */
 
 ?>
@@ -20,6 +21,11 @@
             class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
             <i class="fa-solid fa-plus"></i>
             Novo Registro
+        </a>
+        <a href="<?= $vitrineUrl ?>"
+            class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+            <i class="fa-solid fa-plus"></i>
+            Vitrine
         </a>
     </div>
 

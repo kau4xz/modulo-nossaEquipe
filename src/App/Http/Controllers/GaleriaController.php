@@ -30,7 +30,8 @@ class GaleriaController extends SharedController
                 'urlCriar'   => Url::path('/galeria/criar'),
                 'editarUrl'  => Url::path('/galeria/editar'),
                 'deletarUrl' => Url::path('/galeria/deletar'),
-                'visualizarUrl' => Url::path('/galeria/visualizar')
+                'visualizarUrl' => Url::path('/galeria/visualizar'),
+                'vitrineUrl' => Url::path('/galeria/vitrine')
             ]);
 
             return self::getPage('GALERIA - LISTAGEM', $content, [
@@ -162,7 +163,7 @@ class GaleriaController extends SharedController
             $content = View::render('galeria/visualizar',[
                 'itens' => $itens,
                 'voltarUrl' => Url::path('/galeria'),
-                'UrlSalvar' => Url::path('/galeria/visualizar')
+                'editarUrl'  => Url::path('/galeria/editar')
             ]);
 
             return self::getPage('GALERIA - LISTAGEM', $content,[
@@ -176,7 +177,30 @@ class GaleriaController extends SharedController
             Logger::error($e->getMessage());
             Url::redirect('/home');
         }
+    }
 
+    public function vitrine(): string
+    {
+        try {
+            $itens = $this->galeriaService->getAll();
+            $content = View::render('galeria/vitrine', [
+                'itens'      => $itens,
+                'voltarUrl'  => Url::path('/home'),
+                'urlCriar'   => Url::path('/galeria/criar'),
+                'editarUrl'  => Url::path('/galeria/editar'),
+                'deletarUrl' => Url::path('/galeria/deletar'),
+                'visualizarUrl' => Url::path('/galeria/visualizar')
+            ]);
 
+            return self::getPage('GALERIA - VITRINE', $content, [
+                'showSidebar' => true,
+                'bodyClass'   => 'galeria-page',
+                'activePage'  => 'galeria',
+            ]);
+        } catch (GaleriaExecptions $e) {
+            Toast::error($e->getMessage());
+            Logger::error($e->getMessage());
+            Url::redirect('/home');
+        }
     }
 }
