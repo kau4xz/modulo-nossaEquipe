@@ -44,7 +44,7 @@
             <tbody class="divide-y divide-slate-200">
                 <?php foreach ($itens as $item) : ?>
                 <tr>
-                    <td class="px-5 py-3 font-medium text-slate-900"><?= htmlspecialchars($item->getTitulo()) ?></td>
+                    <td class="px-5 py-3 font-medium text-slate-900"><?= htmlspecialchars($item->getNome()) ?></td>
                     <td class="px-5 py-3 text-slate-600"><?= htmlspecialchars($item->getDescricao() ?? '—') ?></td>
                     <td class="px-5 py-3">
                         <span class="inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium
@@ -61,7 +61,7 @@
                             <button type="button"
                                 class="js-btn-excluir inline-flex items-center gap-1 rounded-lg bg-rose-600 px-3 py-1.5 text-xs font-semibold text-white hover:bg-rose-700"
                                 data-id="<?= htmlspecialchars($item->getId()) ?>"
-                                data-nome="<?= htmlspecialchars($item->getTitulo()) ?>"
+                                data-nome="<?= htmlspecialchars($item->getNome()) ?>"
                                 data-url="<?= $deletarUrl ?>"
                                 data-campo="id">
                                 <i class="fa-solid fa-trash"></i> Excluir

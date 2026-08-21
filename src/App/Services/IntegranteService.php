@@ -54,7 +54,7 @@ class IntegranteService implements IIntegranteService
             'status' => (bool) $data['status'],
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
-           'foto' => $urlFoto,
+            'foto' => $urlFoto,
         ]);
 
         return $this->repository->update($atualizado);

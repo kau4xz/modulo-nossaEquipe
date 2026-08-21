@@ -49,16 +49,17 @@ use Src\App\Utils\Url;
                 </select>
             </div>
 
-             <div>
+            <div>
                 <label for="orderBy" class="text-sm font-medium text-slate-700">Ordernar por</label>
-                <select id="orderBy"
+                <select id="sortSelect"
                     class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
-                    <option value="az">Nome AZ</option>
-                    <option value="za">Nome ZA</option>
-                    <option value="created_old">Criado: mais antigo</option>
-                    <option value="created_recent">Criado: mais recente</option>
-                    <option value="updated_old">Atualizado: mais antigo</option>
-                    <option value="updated_recent">Atualizado: mais recente</option>
+                    <option value="">Padrão</option>
+                    <option value="nome_asc">Nome (A-Z)</option>
+                    <option value="nome_desc">Nome (Z-A)</option>
+                    <option value="criado_desc">Mais recentes (Criação)</option>
+                    <option value="criado_asc">Mais antigos (Criação)</option>
+                    <option value="atualizado_desc">Mais recentes (Atualização)</option>
+                    <option value="atualizado_asc">Mais antigos (Atualização)</option>
 
                 </select>
             </div>
@@ -83,7 +84,7 @@ use Src\App\Utils\Url;
                     </tr>
                 </thead>
 
-               <!-- CORPO -->
+                <!-- CORPO -->
                 <tbody id="integranteTableBody" class="divide-y divide-slate-200 bg-white">
                     <!-- CORPO SEM REGISTRO -->
                     <?php if (empty($itens)) : ?>
@@ -105,7 +106,7 @@ use Src\App\Utils\Url;
                                 data-nome="<?= strtolower(htmlspecialchars($item->getNome())) ?>"
                                 data-cargo="<?= strtolower(htmlspecialchars($item->getCargo() ?? '')) ?>"
                                 data-criado="<?= strtolower(htmlspecialchars($item->getCreatedAt())) ?>"
-                                data-criado="<?= strtolower(htmlspecialchars($item->getUpdatedAt())) ?>"
+                                data-atualizado="<?= strtolower(htmlspecialchars($item->getUpdatedAt())) ?>"
                                 data-status="<?= $item->getStatus() ? '1' : '0' ?>">
                                 <td class="px-5 py-4">
                                     <?php if ($item->getFoto()) : ?>
@@ -113,15 +114,15 @@ use Src\App\Utils\Url;
                                             alt="Foto de <?= htmlspecialchars($item->getNome()) ?>"
                                             class="h-9 w-9 rounded-xl object-cover">
                                     <?php else : ?>
-                                       <div class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
-                                         <i class="fa-solid fa-user"></i> 
-                                       </div>
+                                        <div class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-slate-100 text-slate-700">
+                                            <i class="fa-solid fa-user"></i>
+                                        </div>
                                     <?php endif; ?>
                                 </td>
                                 <td class="px-5 py-4 text-sm font-semibold text-slate-900"><?= htmlspecialchars($item->getNome()) ?></td>
                                 <td class="px-5 py-4 text-sm text-slate-600"><?= htmlspecialchars($item->getCargo() ?? '—') ?></td>
                                 <td class="px-5 py-4 text-sm font-semibold text-slate-900"><?= htmlspecialchars($item->getCreatedAt()) ?></td>
-                                <td class="px-5 py-4 text-sm text-slate-900"><?= htmlspecialchars($item->getUpdatedAt() ??'_') ?></td>
+                                <td class="px-5 py-4 text-sm text-slate-900"><?= htmlspecialchars($item->getUpdatedAt() ?? '_') ?></td>
                                 <td class="px-5 py-4">
                                     <?php if ($item->getStatus()) : ?>
                                         <span class="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-700">

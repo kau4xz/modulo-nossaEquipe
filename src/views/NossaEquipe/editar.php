@@ -3,8 +3,11 @@
 /**
  * @var string  $voltarUrl
  * @var string  $urlSalvar
+ * @var string  $deletarUrl
  * @var \Src\App\Models\Integrante $item
  */
+
+use Src\App\Utils\Url;
 
 ?>
 
@@ -39,15 +42,29 @@
                 </div>
 
                 <div class="mb-4">
-                    <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-4 w-full">
                         <div class="w-full text-center sm:text-left">
-                            <label for="foto" class="block text-sm font-medium text-slate-700">Foto</label>
-                            <input type="file" id="foto" name="foto" accept="image/jpeg,png,jpg" data-max-size-kb="2048"
-                            value="<?= $item->getFoto() ?>"
-                                class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
+                            <label for="foto" class="block text-sm font-medium text-slate-700">Trocar Foto</label>
+                            <label class="justify-center inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                                <i class="fa-solid fa-upload"></i>
+                                <input type="file" id="foto" name="foto" accept="image/jpeg,png,jpg" data-max-size-kb="2048"
+                                    value="<?= $item->getFoto() ?>"
+                                    class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
+                            </label>
+
+
+                            <button type="button"
+                                class="inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-700"
+                                data-foto="<?= htmlspecialchars($item->getFoto()) ?>"
+                                data-url="<?= Url::path('/nossa-equipe/deletar') ?>"
+                                data-campo="id">
+                                <i class="fa-solid fa-trash"></i>
+                                Deletar
+                            </button>
                         </div>
                     </div>
                 </div>
+
 
                 <div class="md:col-span-1">
                     <label for="status" class="text-sm font-medium text-slate-700">Status</label>
