@@ -19,16 +19,16 @@ class GaleriaService implements IGaleriaService
 
     public function create(array $data): Galeria
     {
-         $agora = date('Y-m-d H:i:s');
-
+        $agora = date('Y-m-d H:i:s');
+        
         $novo = Galeria::fromArray([
             'titulo' => $data['titulo'],
             'legenda' => $data['legenda'] ?? null,
-            'status' => true,
+            'status' => $data['status'],
             'created_at' => $agora,
             'updated_at' => $agora,
             'tipo' => $data['tipo'],
-            'caminho' => FileService::save($_FILES['imagem'], 'galeria')
+            'caminho' => FileService::save($_FILES['caminho'], 'galeria')
         ]);
         return $this->repository->create($novo);
     }
@@ -46,10 +46,10 @@ class GaleriaService implements IGaleriaService
             'titulo' => $data['titulo'],
             'legenda' => $data['legenda'] ?? null,
             'tipo' => $data['tipo'],
-            'status' => $existente->getStatus(),
+            'status' => $data['status'],
             'created_at' => $existente->getCreatedAt(),
             'updated_at' => date('Y-m-d H:i:s'),
-            'caminho' => $_FILES['imagem']['name'] === "" ? $existente->getCaminho() : FileService::update($_FILES['imagem'], 'galeria', $existente->getCaminho()) 
+            'caminho' => $_FILES['caminho']['name'] === "" ? $existente->getCaminho() : FileService::update($_FILES['caminho'], 'galeria', $existente->getCaminho()) 
         ]);
 
         return $this->repository->update($atualizado);

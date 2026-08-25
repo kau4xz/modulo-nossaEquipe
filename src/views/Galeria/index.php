@@ -8,7 +8,6 @@
  * @var string $visualizarUrl
  * @var string $vitrineUrl
  */
-
 ?>
 
 <div class="space-y-6">
@@ -17,15 +16,15 @@
             <h1 class="text-3xl font-semibold tracking-tight text-slate-900">Galeria</h1>
             <p class="mt-1 text-sm text-slate-600">Gerencie os registros de Galeria</p>
         </div>
+        <a href="<?= $vitrineUrl ?>"
+            class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+            <i class="fa-solid fa-eye"></i>
+            Vitrine
+        </a>
         <a href="<?= $urlCriar ?>"
             class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
             <i class="fa-solid fa-plus"></i>
             Novo Registro
-        </a>
-        <a href="<?= $vitrineUrl ?>"
-            class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
-            <i class="fa-solid fa-plus"></i>
-            Vitrine
         </a>
     </div>
 

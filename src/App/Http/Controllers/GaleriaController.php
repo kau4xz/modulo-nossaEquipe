@@ -99,7 +99,6 @@ class GaleriaController extends SharedController
         try {
             $request = (new GaleriaRequest($_POST))->redirectOnFail();
             $validated = $request->validated();
-
             $this->galeriaService->create($validated);
             Toast::success('Registro criado com sucesso!');
             Url::redirect('/galeria');
@@ -185,7 +184,7 @@ class GaleriaController extends SharedController
             $itens = $this->galeriaService->getAll();
             $content = View::render('galeria/vitrine', [
                 'itens'      => $itens,
-                'voltarUrl'  => Url::path('/home'),
+                'voltarUrl'  => Url::path('/galeria'),
                 'urlCriar'   => Url::path('/galeria/criar'),
                 'editarUrl'  => Url::path('/galeria/editar'),
                 'deletarUrl' => Url::path('/galeria/deletar'),
