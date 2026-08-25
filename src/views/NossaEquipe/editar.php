@@ -42,31 +42,39 @@ use Src\App\Utils\Url;
                 </div>
 
                 <div class="mb-4">
-                    <div class="flex items-center gap-4 w-full">
-                        <div class="w-full text-center sm:text-left">
-                            <label for="foto" class="block text-sm font-medium text-slate-700">Trocar Foto</label>
-                            <label class="justify-center inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
+                    <div class="flex flex-col gap-2 w-full text-center sm:text-left">
+                        <label class="block text-sm font-medium text-slate-700">Trocar Foto</label>
+
+                        <div class="flex items-center gap-3">
+                            
+                            <label for="foto" class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                                 <i class="fa-solid fa-upload"></i>
-                                <input type="file" id="foto" name="foto" accept="image/jpeg,png,jpg" data-max-size-kb="2048"
-                                    value="<?= $item->getFoto() ?>"
-                                    class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
+                                <span>Escolher arquivo</span>
+                                
+                                <input type="file" id="foto" name="foto" onchange="previewFoto()" accept="image/jpeg, image/png, image/jpg" data-max-size-kb="2048" class="hidden">
                             </label>
 
+                            <?php if ($item->getFoto()) : ?>
+                                <label for="deletarFoto"
+                                    class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                                    <input type="checkbox" id="deletarFoto" name="deletar_foto" value="1"
+                                        class="h-4 w-4 rounded border-slate-300 text-rose-600 focus:ring-rose-500">
+                                    <span>Remover foto atual</span>
+                                </label>
+                            <?php endif; ?>
 
-                            <button type="button"
-                                class="inline-flex items-center justify-center gap-2 rounded-xl bg-rose-600 px-4 py-2 text-sm font-semibold text-white hover:bg-rose-700"
-                                data-foto="<?= htmlspecialchars($item->getFoto()) ?>"
-                                data-url="<?= Url::path('/nossa-equipe/deletar') ?>"
-                                data-campo="id">
-                                <i class="fa-solid fa-trash"></i>
-                                Deletar
-                            </button>
-                        </div>
+                            <img id="img-preview"
+                                <?php if ($item->getFoto()) : ?>
+                                    src="<?= htmlspecialchars(Url::path($item->getFoto())) ?>"
+                                <?php endif; ?>
+                                alt="Foto de <?= htmlspecialchars($item->getNome()) ?>"
+                                class="h-12 w-12 rounded-xl object-cover <?= $item->getFoto() ? '' : 'hidden' ?>">
+
+
                     </div>
                 </div>
 
-
-                <div class="md:col-span-1">
+                <div class="md:col-span-1 bt-5px">
                     <label for="status" class="text-sm font-medium text-slate-700">Status</label>
                     <select id="status" name="status" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
                         <option value="0" <?= $item ? '' : 'selected' ?>>Não Publicado</option>
@@ -94,5 +102,47 @@ use Src\App\Utils\Url;
                 </button>
             </div>
         </form>
+
+        <script>
+            var inputDeletarFoto = document.getElementById('deletarFoto');
+
+            function previewFoto() {
+                var foto = document.querySelector('input[name=foto]').files[0];
+                var preview = document.getElementById('img-preview');
+                var reader = new FileReader();
+
+                reader.onloadend = function () {
+                    preview.src = reader.result;
+                    preview.classList.remove('hidden');
+                };
+
+                if (foto) {
+                    // Arquivo novo tem precedencia sobre a remocao, igual ao Service.
+                    if (inputDeletarFoto) {
+                        inputDeletarFoto.checked = false;
+                    }
+                    reader.readAsDataURL(foto);
+                } else {
+                    preview.removeAttribute('src');
+                    preview.classList.add('hidden');
+                }
+            }
+
+            if (inputDeletarFoto) {
+                inputDeletarFoto.addEventListener('change', function () {
+                    var preview = document.getElementById('img-preview');
+                    var campoArquivo = document.querySelector('input[name=foto]');
+
+                    if (this.checked) {
+                        campoArquivo.value = '';
+                        preview.removeAttribute('src');
+                        preview.classList.add('hidden');
+                    } else if (campoArquivo.files.length === 0) {
+                        preview.classList.remove('hidden');
+                        preview.src = '<?= htmlspecialchars(Url::path($item->getFoto() ?? ''), ENT_QUOTES) ?>';
+                    }
+                });
+            }
+        </script>
     </div>
 </div>

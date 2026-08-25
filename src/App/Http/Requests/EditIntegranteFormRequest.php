@@ -13,7 +13,8 @@ class EditIntegranteFormRequest extends Request
         return [
             'nome' => ['required', 'string', 'max:150', 'min:3'],
             'cargo' => ['required', 'string', 'max:150'],
-            'foto' => ['nullable', 'fileType:jpg,jpeg,png', 'fileSize: 2048'],
+            'foto' => ['nullable', 'fileType:jpg,jpeg,png', 'fileSize:2048'],
+            'deletar_foto' => ['nullable', 'in:0,1'],
             'status' => ['required', 'integer', 'in:0,1'],
             'id' => ['required', 'string']
         ];
@@ -32,10 +33,12 @@ class EditIntegranteFormRequest extends Request
             'cargo.max' => 'O campo cargo deve ter no máximo 150 caracteres.',
 
             'foto.fileType' => 'A extensão da foto não foi aceita Extensões aceitas: jpg, png e jpeg.',
-            'foto.fileSize' => 'Tamanho máximo de 16MB excedido',
+            'foto.fileSize' => 'A foto não pode exceder 2MB.',
+
+            'deletar_foto.in' => 'Valor inválido para a remoção da foto.',
 
             'status.required' => 'O campo status é obrigatório.',
-            'status.in' => 'O campo status deve ser "ativo" ou "inativo".',
+            'status.in' => 'O campo status deve ser "publicado" ou "não publicado".',
 
             'id.required' => 'o campo de ID é obrigatório',
             'id.string' => 'o campo de ID deve ser um texto'

@@ -41,10 +41,16 @@ class IntegranteService implements IIntegranteService
         if ($existente === null) {
             throw NossaEquipeException::naoEncontrado();
         }
-        $urlFoto = $existente->getFoto();
+        $fotoAntiga = $existente->getFoto();
+        $urlFoto = $fotoAntiga;
+        $removerFoto = false;
 
-        if(is_array($data['foto'])){
-            $urlFoto = FileService::update($data['foto'], 'integrantes', $existente->getFoto());
+        if (is_array($data['foto'])) {
+           
+            $urlFoto = FileService::update($data['foto'], 'integrantes', $fotoAntiga);
+        } elseif (! empty($data['deletar_foto']) && $fotoAntiga) {
+            $urlFoto = null;
+            $removerFoto = true;
         }
 
         $atualizado = Integrante::fromArray([
@@ -57,7 +63,14 @@ class IntegranteService implements IIntegranteService
             'foto' => $urlFoto,
         ]);
 
-        return $this->repository->update($atualizado);
+        $salvo = $this->repository->update($atualizado);
+
+      
+        if ($removerFoto) {
+            FileService::delete($fotoAntiga);
+        }
+
+        return $salvo;
     }
 
     public function delete(string $id): bool

@@ -52,13 +52,13 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
             <?php endif; ?>
 
             <!-- TODO: substitua este item pelo(s) módulo(s) do seu projeto -->
-            <li>
+            <!-- <li>
                 <a href="<?= htmlspecialchars($urlExemplo) ?>"
                     class="<?= $activeExemplo ? $linkActive : $linkInactive ?>">
                     <i class="fa-solid fa-layer-group text-base"></i>
                     <span>Exemplo</span>
                 </a>
-            </li>
+            </li> -->
 
              <li>
                 <a href="<?= htmlspecialchars($urlNossaEquipe) ?>"

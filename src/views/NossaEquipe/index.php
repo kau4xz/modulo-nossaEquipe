@@ -105,8 +105,8 @@ use Src\App\Utils\Url;
                             <tr class="hover:bg-slate-50"
                                 data-nome="<?= strtolower(htmlspecialchars($item->getNome())) ?>"
                                 data-cargo="<?= strtolower(htmlspecialchars($item->getCargo() ?? '')) ?>"
-                                data-criado="<?= strtolower(htmlspecialchars($item->getCreatedAt())) ?>"
-                                data-atualizado="<?= strtolower(htmlspecialchars($item->getUpdatedAt())) ?>"
+                                data-criado="<?= strtolower(htmlspecialchars($item->getCreatedAt() ?? '')) ?>"
+                                data-atualizado="<?= strtolower(htmlspecialchars($item->getUpdatedAt() ?? '')) ?>"
                                 data-status="<?= $item->getStatus() ? '1' : '0' ?>">
                                 <td class="px-5 py-4">
                                     <?php if ($item->getFoto()) : ?>
