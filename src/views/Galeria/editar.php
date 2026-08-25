@@ -47,8 +47,8 @@
                         <label for="status" class="block text-sm font-medium text-slate-700">Status</label>
                         <select id="status" name="status"
                             class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
-                            <option value="1" <?= old('status') === '1' || old('status') === '' ? 'selected' : '' ?>>Ativo</option>
-                            <option value="0" <?= old('status') === '0' ? 'selected' : '' ?>>Inativo</option>
+                            <option value="1" <?= $item->getStatus() === true ? "selected" : '' ?>>Ativo</option>
+                            <option value="0" <?= $item->getStatus() === false ? "selected" : '' ?>>Inativo</option>
                         </select>
                         <?= old_error('status') ?>
                     </div>

@@ -18,7 +18,7 @@ class GaleriaService implements IGaleriaService
     }
 
     public function create(array $data): Galeria
-    {
+    {   
         $agora = date('Y-m-d H:i:s');
         
         $novo = Galeria::fromArray([
@@ -34,9 +34,9 @@ class GaleriaService implements IGaleriaService
     }
 
     public function update(string $id, array $data): Galeria
-    {
+    {  
         $existente = $this->repository->getById($id);
-
+        
         if ($existente === null) {
             throw GaleriaExecptions::naoEncontrado();
         }
