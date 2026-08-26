@@ -6,7 +6,7 @@ namespace Src\App\Models;
 
 use Ramsey\Uuid\Uuid;
 
-// TODO: renomeie esta classe e seus campos para o seu domínio
+
 class Integrante
 {
     private ?string $id;

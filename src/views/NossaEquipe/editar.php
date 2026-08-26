@@ -27,7 +27,7 @@ use Src\App\Utils\Url;
             <div class="space-y-4">
                 <div>
                     <label for="nome" class="block text-sm font-medium text-slate-700">Nome <span class="text-rose-600">*</span></label>
-                    <input type="text" id="nome" name="nome" required minlength="3" maxlength="150"
+                    <input type="text" id="nome" name="nome" required minlength="3" maxlength="150" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
                         value="<?= $item->getNome() ?>"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
                     <?= old_error('nome') ?>
@@ -35,7 +35,7 @@ use Src\App\Utils\Url;
 
                 <div>
                     <label for="cargo" class="block text-sm font-medium text-slate-700">Cargo<span class="text-rose-600">*</span></label>
-                    <input type="text" id="cargo" name="cargo" required minlength="3" maxlength="150"
+                    <input type="text" id="cargo" name="cargo" required minlength="3" maxlength="150" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
                         value="<?= $item->getCargo() ?>"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
                     <?= old_error('cargo') ?>
@@ -46,11 +46,11 @@ use Src\App\Utils\Url;
                         <label class="block text-sm font-medium text-slate-700">Trocar Foto</label>
 
                         <div class="flex items-center gap-3">
-                            
+
                             <label for="foto" class="inline-flex cursor-pointer items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-50">
                                 <i class="fa-solid fa-upload"></i>
                                 <span>Escolher arquivo</span>
-                                
+
                                 <input type="file" id="foto" name="foto" onchange="previewFoto()" accept="image/jpeg, image/png, image/jpg" data-max-size-kb="2048" class="hidden">
                             </label>
 
@@ -65,42 +65,45 @@ use Src\App\Utils\Url;
 
                             <img id="img-preview"
                                 <?php if ($item->getFoto()) : ?>
-                                    src="<?= htmlspecialchars(Url::path($item->getFoto())) ?>"
+                                src="<?= htmlspecialchars(Url::path($item->getFoto())) ?>"
                                 <?php endif; ?>
                                 alt="Foto de <?= htmlspecialchars($item->getNome()) ?>"
                                 class="h-12 w-12 rounded-xl object-cover <?= $item->getFoto() ? '' : 'hidden' ?>">
+                        </div>
 
-
+                        <div class="flex flex-col m-3px mt-2 text-xs text-slate-500">
+                            <span class="ml-2px"> <i class="fa-solid fa-circle-info"></i> Extensões aceitas: .png, .jpg, .jpeg </span>
+                            <span> <i class="fa-solid fa-triangle-exclamation"></i> Tamanho máximo: 2 Mb </span>
+                        </div>
                     </div>
+
+                    <div class="md:col-span-1 bt-5px">
+                        <label for="status" class="text-sm font-medium text-slate-700">Status</label>
+                        <select id="status" name="status" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
+                            <option value="0" <?= $item ? '' : 'selected' ?>>Não Publicado</option>
+                            <option value="1" <?= $item ? 'selected' : '' ?>>Publicado</option>
+                        </select>
+
+                        <?php $statusErr = old_error('status'); ?>
+                        <?php if ($statusErr !== '') { ?>
+                            <p class="mt-2 text-sm font-medium text-rose-700" id="status-error"><?php echo htmlspecialchars($statusErr); ?></p>
+                        <?php } ?>
+                    </div>
+
+
+
                 </div>
 
-                <div class="md:col-span-1 bt-5px">
-                    <label for="status" class="text-sm font-medium text-slate-700">Status</label>
-                    <select id="status" name="status" class="mt-1 h-10 w-full rounded-xl border border-slate-200 bg-white px-3 py-2 text-sm text-slate-900 focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
-                        <option value="0" <?= $item ? '' : 'selected' ?>>Não Publicado</option>
-                        <option value="1" <?= $item ? 'selected' : '' ?>>Publicado</option>
-                    </select>
-
-                    <?php $statusErr = old_error('status'); ?>
-                    <?php if ($statusErr !== '') { ?>
-                        <p class="mt-2 text-sm font-medium text-rose-700" id="status-error"><?php echo htmlspecialchars($statusErr); ?></p>
-                    <?php } ?>
+                <div class="mt-6 flex justify-end gap-3">
+                    <a href="<?= $voltarUrl ?>"
+                        class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
+                        Cancelar
+                    </a>
+                    <button type="submit"
+                        class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
+                        <i class="fa-solid fa-floppy-disk"></i> Atualizar
+                    </button>
                 </div>
-
-
-
-            </div>
-
-            <div class="mt-6 flex justify-end gap-3">
-                <a href="<?= $voltarUrl ?>"
-                    class="inline-flex items-center gap-2 rounded-xl border border-slate-200 px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50">
-                    Cancelar
-                </a>
-                <button type="submit"
-                    class="inline-flex items-center gap-2 rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800">
-                    <i class="fa-solid fa-floppy-disk"></i> Atualizar
-                </button>
-            </div>
         </form>
 
         <script>
@@ -111,7 +114,7 @@ use Src\App\Utils\Url;
                 var preview = document.getElementById('img-preview');
                 var reader = new FileReader();
 
-                reader.onloadend = function () {
+                reader.onloadend = function() {
                     preview.src = reader.result;
                     preview.classList.remove('hidden');
                 };
@@ -129,7 +132,7 @@ use Src\App\Utils\Url;
             }
 
             if (inputDeletarFoto) {
-                inputDeletarFoto.addEventListener('change', function () {
+                inputDeletarFoto.addEventListener('change', function() {
                     var preview = document.getElementById('img-preview');
                     var campoArquivo = document.querySelector('input[name=foto]');
 

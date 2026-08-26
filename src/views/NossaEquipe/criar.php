@@ -22,7 +22,7 @@
             <div class="space-y-4">
                 <div>
                     <label for="nome" class="block text-sm font-medium text-slate-700">Nome <span class="text-rose-600">*</span></label>
-                    <input type="text" id="nome" name="nome" required minlength="3" maxlength="150"
+                    <input type="text" id="nome" name="nome" required minlength="3" maxlength="150" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
                         value="<?= old('nome') ?>"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100">
                     <?= old_error('nome') ?>
@@ -30,7 +30,7 @@
 
                 <div>
                     <label for="cargo" class="block text-sm font-medium text-slate-700">Cargo<span class="text-rose-600">*</span></label>
-                    <input type="text " id="cargo" name="cargo" required minlength="3" maxlength="150"
+                    <input type="text " id="cargo" name="cargo" required minlength="3" maxlength="150"  oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"><?= old('cargo') ?></textarea>
                     <?= old_error('cargo') ?>
                 </div>
