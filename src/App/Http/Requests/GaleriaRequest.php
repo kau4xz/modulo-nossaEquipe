@@ -17,7 +17,7 @@ class GaleriaRequest extends Request
             'legenda' => ['nullable', 'string', 'max:500'],
             'tipo' => ['nullable', 'string'],
             'status'    => ['nullable', 'boolean'],
-            'caminho' => ['nullable', 'fileType:jpeg,png,jpg,webp', 'fileSize:2048']        
+            'caminho' => ['nullable', 'fileSize:2048','fileType:jpeg,png,jpg,webp']        
             ];
     }
 
@@ -30,7 +30,7 @@ class GaleriaRequest extends Request
             'titulo.max'      => 'O título não pode exceder 150 caracteres.',
             'legenda.max'   => 'A descrição não pode exceder 500 caracteres.',
             'caminho.fileType'   => 'Tipo de arquivo inválido.',
-            'caminho.fileSize'   => 'O arquivo execede 10 MB.'
+            'caminho.fileSize'   => 'O arquivo execede 2 MB.'
         ];
     }
 }
