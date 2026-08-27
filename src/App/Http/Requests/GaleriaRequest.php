@@ -15,7 +15,7 @@ class GaleriaRequest extends Request
             'id'        => ['nullable', 'string'],
             'titulo'    => ['required', 'string', 'min:3', 'max:150'],
             'legenda' => ['nullable', 'string', 'max:500'],
-            'tipo' => ['nullable', 'string'],
+            'tipo' => ['nullable', 'string','in:Natureza,Esporte,Automotivo,Tecnologia'],
             'status'    => ['nullable', 'boolean'],
             'caminho' => ['nullable', 'fileSize:2048','fileType:jpeg,png,jpg,webp']        
             ];
@@ -30,7 +30,8 @@ class GaleriaRequest extends Request
             'titulo.max'      => 'O título não pode exceder 150 caracteres.',
             'legenda.max'   => 'A descrição não pode exceder 500 caracteres.',
             'caminho.fileType'   => 'Tipo de arquivo inválido.',
-            'caminho.fileSize'   => 'O arquivo execede 2 MB.'
+            'caminho.fileSize'   => 'O arquivo execede 2 MB.',
+            'tipo.in' => 'Tipo inválido'
         ];
     }
 }
