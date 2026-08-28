@@ -6,6 +6,7 @@ $activeAdmin    = $activeAdmin ?? false;
 $activeExemplo  = $activeExemplo ?? false;
 $activeNossaEquipe  = $activeNossaEquipe ?? false;
 $activeNoticia  = $activeNoticia ?? false;
+$activeGaleria  = $activeGaleria ?? false;
 $activeConfig   = $activeConfig ?? false;
 
 $urlDashboard = $urlDashboard ?? '';
@@ -13,6 +14,7 @@ $urlAdmin     = $urlAdmin ?? '';
 $urlExemplo   = $urlExemplo ?? '';
 $urlNossaEquipe   = $urlNossaEquipe ?? '';
 $urlNoticia   = $urlNoticia ?? '';
+$urlGaleria   = $urlGaleria ?? '';
 $urlConfig    = $urlConfig ?? '';
 $urlLogout    = $urlLogout ?? '';
 
@@ -75,6 +77,14 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
                     class="<?= $activeNossaEquipe ? $linkActive : $linkInactive ?>">
                     <i class="fa-solid fa-users-rectangle text-base"></i>
                     <span>Nossa Equipe</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="<?= htmlspecialchars($urlGaleria) ?>"
+                    class="<?= $activeGaleria ? $linkActive : $linkInactive ?>">
+                    <i class="fa-solid fa-layer-group text-base"></i>
+                    <span>Galeria</span>
                 </a>
             </li>
         </ul>
