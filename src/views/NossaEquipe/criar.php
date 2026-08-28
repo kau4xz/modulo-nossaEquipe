@@ -30,7 +30,7 @@
 
                 <div>
                     <label for="cargo" class="block text-sm font-medium text-slate-700">Cargo<span class="text-rose-600">*</span></label>
-                    <input type="text " id="cargo" name="cargo" required minlength="3" maxlength="150"  oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
+                    <input type="text " id="cargo" name="cargo" required minlength="3" maxlength="150" oninput="this.value = this.value.replace(/[^A-Za-zÀ-ÿ\s]/g, '')"
                         class="mt-1 block w-full rounded-xl border border-slate-200 px-3 py-2 text-sm focus:border-slate-400 focus:outline-none focus:ring-4 focus:ring-slate-100"><?= old('cargo') ?></textarea>
                     <?= old_error('cargo') ?>
                 </div>
@@ -41,11 +41,16 @@
                         <span>Escolher arquivo</span>
 
                         <input type="file" id="foto" name="foto" onchange="previewFoto()" accept="image/jpeg, image/png, image/jpg" data-max-size-kb="2048" class="hidden">
-                         <img id="img-preview"
+                        <img id="img-preview"
                             class="h-12 w-12 rounded-xl object-cover border-5 fa-solid fa-user">
                     </label>
 
-                   
+
+
+                </div>
+                <div class="flex flex-col m-3px mt-2 text-xs text-slate-500">
+                    <span class="ml-2px"> <i class="fa-solid fa-circle-info"></i> Extensões aceitas: .png, .jpg, .jpeg </span>
+                    <span> <i class="fa-solid fa-triangle-exclamation"></i> Tamanho máximo: 2 Mb </span>
                 </div>
             </div>
 
@@ -70,7 +75,7 @@
 
                 reader.onloadend = function() {
                     preview.src = reader.result;
-                   
+
                     preview.classList.remove('hidden');
                 }
 
@@ -78,7 +83,7 @@
                     reader.readAsDataURL(foto);
                 } else {
                     preview.src = "";
-                   
+
                     preview.classList.add('hidden');
                 }
             }
