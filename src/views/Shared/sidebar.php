@@ -5,12 +5,14 @@ $activeDashboard = $activeDashboard ?? false;
 $activeAdmin    = $activeAdmin ?? false;
 $activeExemplo  = $activeExemplo ?? false;
 $activeNossaEquipe  = $activeNossaEquipe ?? false;
+$activeNoticia  = $activeNoticia ?? false;
 $activeConfig   = $activeConfig ?? false;
 
 $urlDashboard = $urlDashboard ?? '';
 $urlAdmin     = $urlAdmin ?? '';
 $urlExemplo   = $urlExemplo ?? '';
 $urlNossaEquipe   = $urlNossaEquipe ?? '';
+$urlNoticia   = $urlNoticia ?? '';
 $urlConfig    = $urlConfig ?? '';
 $urlLogout    = $urlLogout ?? '';
 
@@ -31,7 +33,7 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
         </button>
     </div>
 
-    <nav class="flex h-[calc(100%-4rem)] flex-col justify-between overflow-y-auto p-4">
+    <nav class="flex h-[calc(100vh-4rem)] flex-col justify-between overflow-y-auto p-4">
         <ul class="space-y-1">
             <li>
                 <a href="<?= htmlspecialchars($urlDashboard) ?>"
@@ -51,6 +53,14 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
             </li>
             <?php endif; ?>
 
+            <li>
+                <a href="<?= htmlspecialchars($urlNoticia) ?>"
+                    class="<?= $activeNoticia ? $linkActive : $linkInactive ?>">
+                    <i class="fa-solid fa-newspaper"></i>
+                    <span>Notícias</span>
+                </a>
+            </li>
+
             <!-- TODO: substitua este item pelo(s) módulo(s) do seu projeto -->
             <!-- <li>
                 <a href="<?= htmlspecialchars($urlExemplo) ?>"
@@ -60,7 +70,7 @@ $linkInactive = $linkBase . ' text-slate-700 hover:bg-slate-100 hover:text-slate
                 </a>
             </li> -->
 
-             <li>
+            <li>
                 <a href="<?= htmlspecialchars($urlNossaEquipe) ?>"
                     class="<?= $activeNossaEquipe ? $linkActive : $linkInactive ?>">
                     <i class="fa-solid fa-users-rectangle text-base"></i>

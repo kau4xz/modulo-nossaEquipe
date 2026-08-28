@@ -67,13 +67,25 @@ CREATE TABLE `tb_exemplo` (
 
 SET FOREIGN_KEY_CHECKS = 1;
 
-CREATE TABLE tb_integrante  (]
-  id char(36) NOT NULL,
-  nome VARCHAR(150) NOT NULL,
-  cargo VARCHAR(150) DEFAULT NULL,
-  foto VARCHAR(150) DEFAULT NULL,
-  status TINYINT(1) DEFAULT 1,
-  created_at  datetime DEFAULT CURRENT_TIMESTAMP,
-  updated_at  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY(id)
+CREATE TABLE `tb_integrante` (
+  `id`          char(36) NOT NULL,
+  `nome`        varchar(150) NOT NULL,
+  `cargo`       varchar(150) DEFAULT NULL,
+  `foto`        varchar(150) DEFAULT NULL,
+  `status`      tinyint(1) DEFAULT 1,
+  `created_at`  datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Modulo Noticia
+CREATE TABLE `tb_noticia` (
+  `id`          char(36) NOT NULL,
+  `titulo`      varchar(150) NOT NULL,
+  `descricao`   text DEFAULT NULL,
+  `imagem`      varchar(255) DEFAULT NULL,
+  `status`      tinyint(1) DEFAULT 1,
+  `created_at`  datetime DEFAULT CURRENT_TIMESTAMP,
+  `updated_at`  datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
